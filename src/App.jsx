@@ -15,7 +15,7 @@ export default function App() {
     };
 
     try {
-      const respuesta = await fetch('https://mercado-once-backend.onrender.com/api/comerciantes', {
+      const respuesta = await fetch('https://mercado-once-backend-4t1c3zmla-alex-e392.vercel.app/api/comerciantes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -33,7 +33,8 @@ export default function App() {
       }
     } catch (error) {
       console.error('Error de red o conexión:', error);
-      alert('No se pudo conectar con el servidor backend en el puerto 5000.');
+      alert('Error de conexion: ' + error.message);
+      
     }
   };
 
