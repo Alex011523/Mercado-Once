@@ -33,6 +33,38 @@ export default function App() {
       }
     } catch (error) {
       console.error('Error de red o conexión:', error);
+const handleSubmitCliente = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const datos = {
+      nombre: formData.get('nombre'),
+      email: formData.get('email'),
+      password: formData.get('password')
+    };
+
+    try {
+      const respuesta = await fetch('https://mercado-once-backend.vercel.app/api/clientes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)
+      });
+
+      const resultado = await respuesta.json();
+
+      if (respuesta.ok) {
+        alert('¡Registro de cliente guardado con éxito!');
+        e.target.reset();
+      } else {
+        alert('Error del servidor: ' + (resultado.message || JSON.stringify(resultado)));
+      }
+    } catch (error) {
+      console.error('Error de red o conexión:', error);
+      alert('Error de conexión: ' + error.message);
+    }
+  };
+
       alert('Error de conexion: ' + error.message);
       
     }
