@@ -15,7 +15,7 @@ export default function App() {
     };
 
     try {
-      const respuesta = await fetch('https://mercado-once-backend-4t1c3zmla-alex-e392.vercel.app/api/comerciantes', {
+      const respuesta = await fetch('https://mercado-once-backend.vercel.app/api/comerciantes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
