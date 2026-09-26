@@ -86,11 +86,11 @@ export default function App() {
           <div style={{ backgroundColor: '#1e1e1e', padding: '20px', borderRadius: '8px', border: '1px solid #333' }}>
             <h3 style={{ marginTop: 0, color: '#2196f3' }}>Registro de Cliente</h3>
             <p style={{ fontSize: '13px', color: '#aaa' }}>Creá tu cuenta para comprar online y contactar locales.</p>
-            <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <input type="text" placeholder="Nombre completo" style={{ padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} />
-              <input type="email" placeholder="Correo electrónico" style={{ padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} />
-              <input type="password" placeholder="Contraseña" style={{ padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} />
-              <button type="button" style={{ backgroundColor: '#2196f3', color: 'white', padding: '12px', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}>
+            <form onSubmit={handleSubmitCliente} . style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <input type="text" name="nombre" placeholder="Nombre completo" style={{ padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} />
+              <input type="email" name="email" placeholder="Correo electrónico" style={{ padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} />
+              <input type="password" name="password" placeholder="Contraseña" style={{ padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} />
+              <button type="submit" style={{ backgroundColor: '#2196f3', color: 'white', padding: '12px', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}>
                 Crear mi cuenta de cliente
               </button>
             </form>
