@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+const API_BASE_URL = 'https://mercado-once-backend-1.onrender.com/api';
+
 export default function App() {
   const [tipoCuenta, setTipoCuenta] = useState('comprador');
 
@@ -15,7 +17,7 @@ export default function App() {
     };
 
     try {
-      const respuesta = await fetch('https://mercado-once-backend.vercel.app/api/comerciantes', {
+      const respuesta = await fetch(${API_BASE_URL}/comerciantes, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -33,17 +35,21 @@ export default function App() {
       }
     } catch (error) {
       console.error('Error de red o conexión:', error);
-const handleSubmitCliente = async (e) => {
+      alert('Error de conexión: ' + error.message);
+    }
+  };
+
+  const handleSubmitCliente = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const datos = {
+    const datos = { 
       nombre: formData.get('nombre'),
       email: formData.get('email'),
       password: formData.get('password')
     };
 
     try {
-      const respuesta = await fetch('https://mercado-once-backend.vercel.app/api/clientes', {
+      const respuesta = await fetch(${API_BASE_URL}/clientes, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -51,22 +57,18 @@ const handleSubmitCliente = async (e) => {
         body: JSON.stringify(datos)
       });
 
-      const resultado = await respuesta.json();
-
-      if (respuesta.ok) {
-        alert('¡Registro de cliente guardado con éxito!');
-        e.target.reset();
-      } else {
-        alert('Error del servidor: ' + (resultado.message || JSON.stringify(resultado)));
+      if (!respuesta.ok) {
+        const errorTexto = await respuesta.text();
+        alert(Error del servidor (${respuesta.status}): ${errorTexto});
+        return;
       }
+
+      const resultado = await respuesta.json();
+      alert('¡Registro de cliente guardado con éxito!');
+      e.target.reset();
     } catch (error) {
       console.error('Error de red o conexión:', error);
       alert('Error de conexión: ' + error.message);
-    }
-  };
-
-      alert('Error de conexion: ' + error.message);
-      
     }
   };
 
@@ -78,7 +80,7 @@ const handleSubmitCliente = async (e) => {
 
       <main style={{ padding: '15px', paddingBottom: '80px' }}>
         <div style={{ display: 'flex', marginBottom: '20px', borderBottom: '1px solid #333' }}>
-          <button 
+          <button
             type="button"
             onClick={() => setTipoCuenta('comprador')}
             style={{
@@ -86,8 +88,8 @@ const handleSubmitCliente = async (e) => {
               padding: '10px',
               background: 'none',
               border: 'none',
-              borderBottom: tipoCuenta === 'comprador' ? '3px solid #2196f3' : 'none',
-              color: tipoCuenta === 'comprador' ? '#2196f3' : '#888',
+              borderBottom: tipoCuenta === 'comprador' ? '3px solid #4caf50' : 'none',
+              color: tipoCuenta === 'comprador' ? '#4caf50' : '#888',
               fontWeight: 'bold',
               fontSize: '14px',
               cursor: 'pointer'
@@ -95,7 +97,8 @@ const handleSubmitCliente = async (e) => {
           >
             Soy Cliente
           </button>
-          <button 
+
+          <button
             type="button"
             onClick={() => setTipoCuenta('comerciante')}
             style={{
@@ -118,7 +121,7 @@ const handleSubmitCliente = async (e) => {
           <div style={{ backgroundColor: '#1e1e1e', padding: '20px', borderRadius: '8px', border: '1px solid #333' }}>
             <h3 style={{ marginTop: 0, color: '#2196f3' }}>Registro de Cliente</h3>
             <p style={{ fontSize: '13px', color: '#aaa' }}>Creá tu cuenta para comprar online y contactar locales.</p>
-            <form onSubmit={handleSubmitCliente} . style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <form onSubmit={handleSubmitCliente} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <input type="text" name="nombre" placeholder="Nombre completo" style={{ padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} />
               <input type="email" name="email" placeholder="Correo electrónico" style={{ padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} />
               <input type="password" name="password" placeholder="Contraseña" style={{ padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} />
