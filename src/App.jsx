@@ -259,4 +259,15 @@ export default function App() {
                 style={{ flex: 1, padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} 
               />
               <button 
-                type="submit"
+                type="submit" 
+                style={{ backgroundColor: '#ff9800', color: 'white', padding: '0 15px', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}
+              >
+                Enviar
+              </button>
+              </form>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+} 
