@@ -15,7 +15,7 @@ export default function App() {
   const cargarMensajes = async () => {
     if (!emisorId || !receptorId) return;
     try {
-      const respuesta = await fetch(${API_BASE_URL}/mensajes/${emisorId}/${receptorId});
+      const respuesta = await fetch(`${API_BASE_URL}/mensajes/${emisorId}/${receptorId}`);
       const resultado = await respuesta.json();
       if (resultado.ok) {
         setMensajes(resultado.conversacion || []);
@@ -45,7 +45,7 @@ export default function App() {
     };
 
     try {
-      const respuesta = await fetch(${API_BASE_URL}/mensajes, {
+      const respuesta = await fetch(`${API_BASE_URL}/mensajes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -78,7 +78,7 @@ export default function App() {
     };
 
     try {
-      const respuesta = await fetch(${API_BASE_URL}/comerciantes, {
+      const respuesta = await fetch(`${API_BASE_URL}/comerciantes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos)
@@ -106,7 +106,7 @@ export default function App() {
     };
 
     try {
-      const respuesta = await fetch(${API_BASE_URL}/clientes, {
+      const respuesta = await fetch(`${API_BASE_URL}/clientes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos)
@@ -259,15 +259,4 @@ export default function App() {
                 style={{ flex: 1, padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} 
               />
               <button 
-                type="submit" 
-                style={{ backgroundColor: '#ff9800', color: 'white', padding: '0 15px', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}
-              >
-                Enviar
-              </button>
-            </form>
-          </div>
-        )}
-      </main>
-    </div>
-  );
-}
+                type="submit"
