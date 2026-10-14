@@ -227,6 +227,7 @@ export default function App() {
                 />
               </div>
               <button 
+                type="button"
                 onClick={cargarMensajes} 
                 style={{ alignSelf: 'flex-end', padding: '9px 12px', backgroundColor: '#333', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
               >
