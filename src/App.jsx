@@ -4,12 +4,76 @@ const API_BASE_URL = 'https://mercado-once-backend-1.onrender.com/api';
 
 export default function App() {
   const [tipoCuenta, setTipoCuenta] = useState('comprador');
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('Todos');
+  const [busqueda, setBusqueda] = useState('');
+  const [ordenPrecio, setOrdenPrecio] = useState('menor');
+  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
+  const [carrito, setCarrito] = useState([]);
+  const [favoritos, setFavoritos] = useState([]);
   
   // Estados para la sección de Mensajería
   const [emisorId, setEmisorId] = useState('1');
   const [receptorId, setReceptorId] = useState('2');
   const [mensajes, setMensajes] = useState([]);
   const [textoMensaje, setTextoMensaje] = useState('');
+
+  // Categorías comerciales de Once
+  const categoriasOnce = [
+    'Todos', 
+    'Indumentaria', 
+    'Marroquinería', 
+    'Tecnología', 
+    'Hogar y Bazar', 
+    'Calzado',
+    'Juguetería',
+    'Bijouterie y accesorios',
+    'articulos regionales',
+    'lenceria',
+    'libreria y articulos escolares'
+  ];
+
+  // Productos de ejemplo para simular la grilla del catálogo
+  const productosEjemplo = [
+    { id: 101, nombre: 'Remera Lisa Algodón 100%', precio: 8500, categoria: 'Indumentaria', comercio: 'Textil Once', direccion: 'Av. Pueyrredón 450', imagen: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=300&q=80', descripcion: 'Remera de algodón peinado, varios colores y talles del S al XXL.' },
+    { id: 102, nombre: 'Remera Lisa Premium Oversize', precio: 11000, categoria: 'Indumentaria', comercio: 'Moda Uriburu', direccion: 'Uriburu 320', imagen: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=300&q=80', descripcion: 'Corte oversize urbano, excelente calidad de confección.' },
+    { id: 103, nombre: 'Mochila Urbana Reforzada', precio: 22500, categoria: 'Marroquinería', comercio: 'Bolsos Once', direccion: 'Paso 210', imagen: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&q=80', descripcion: 'Impermeable, con compartimento para notebook de 15.6 pulgadas.' },
+    { id: 104, nombre: 'Auriculares Bluetooth Inalámbricos', precio: 14200, categoria: 'Tecnología', comercio: 'Gadgets Castelli', direccion: 'Castelli 180', imagen: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&q=80', descripcion: 'Sonido HD, batería de 8hs continuas con estuche de carga.' },
+    { id: 105, nombre: 'Juego de Sabanas 2 Plazas 1400 Hilos', precio: 19800, categoria: 'Hogar y Bazar', comercio: 'Blanqueria Larrea', direccion: 'Larrea 540', imagen: 'https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=300&q=80', descripcion: 'Microfibra de alta densidad, suave al tacto y no junta pelotillas.' },
+    { id: 106, nombre: 'Zapatillas Deportivas Urbanas', precio: 32000, categoria: 'Calzado', comercio: 'Calzados Jujuy', direccion: 'Av. Jujuy 120', imagen: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&q=80', descripcion: 'Suela de goma antideslizante, súper livianas y cómodas.' },
+    { id: 107, nombre: 'Juego de Mesa Clásico', precio: 15500, categoria: 'Juguetería', comercio: 'Juguetes Pasteur', direccion: 'Pasteur 410', imagen: 'https://images.unsplash.com/photo-1610890716171-6b1bb98ffd09?w=300&q=80', descripcion: 'Ideal para la familia, incluye tablero de madera y fichas.' }
+  ];
+
+  // Funciones de Carrito y Favoritos
+  const agregarAlCarrito = (producto) => {
+    setCarrito([...carrito, producto]);
+    alert(`¡${producto.nombre} agregado al carrito!`);
+  };
+
+  const eliminarDelCarrito = (indexParaEliminar) => {
+    const nuevoCarrito = carrito.filter((_, index) => index !== indexParaEliminar);
+    setCarrito(nuevoCarrito);
+  };
+
+  const toggleFavorito = (producto, e) => {
+    e.stopPropagation();
+    if (favoritos.some(f => f.id === producto.id)) {
+      setFavoritos(favoritos.filter(f => f.id !== producto.id));
+    } else {
+      setFavoritos([...favoritos, producto]);
+    }
+  };
+
+  // Filtrado y ordenamiento dinámico de productos
+  const productosFiltrados = productosEjemplo
+    .filter((prod) => {
+      const coincideCategoria = categoriaSeleccionada === 'Todos' || prod.categoria === categoriaSeleccionada;
+      const coincideBusqueda = prod.nombre.toLowerCase().includes(busqueda.toLowerCase()) || 
+                               prod.comercio.toLowerCase().includes(busqueda.toLowerCase());
+      return coincideCategoria && coincideBusqueda;
+    })
+    .sort((a, b) => {
+      return ordenPrecio === 'menor' ? a.precio - b.precio : b.precio - a.precio;
+    });
 
   // Función para obtener los mensajes entre dos usuarios (GET)
   const cargarMensajes = async () => {
@@ -47,9 +111,7 @@ export default function App() {
     try {
       const respuesta = await fetch(`${API_BASE_URL}/mensajes`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos)
       });
 
@@ -57,9 +119,9 @@ export default function App() {
 
       if (respuesta.ok) {
         setTextoMensaje('');
-        cargarMensajes(); // Recargamos la conversación
+        cargarMensajes();
       } else {
-        alert('Error al enviar mensaje: ' + (resultado.error || 'Desconocido'));
+        alert(`Error al enviar mensaje: ${resultado.error || 'Desconocido'}`);
       }
     } catch (error) {
       console.error('Error de red:', error);
@@ -88,11 +150,11 @@ export default function App() {
         alert('¡Registro de comerciante guardado con éxito!');
         e.target.reset();
       } else {
-        alert('Error del servidor: ' + (resultado.message || JSON.stringify(resultado)));
+        alert(`Error del servidor: ${resultado.message || JSON.stringify(resultado)}`);
       }
     } catch (error) {
       console.error('Error de red:', error);
-      alert('Error de conexión: ' + error.message);
+      alert(`Error de conexión: ${error.message}`);
     }
   };
 
@@ -122,152 +184,363 @@ export default function App() {
       e.target.reset();
     } catch (error) {
       console.error('Error de red:', error);
-      alert('Error de conexión: ' + error.message);
+      alert(`Error de conexión: ${error.message}`);
     }
   };
 
   return (
-    <div style={{ backgroundColor: '#121212', color: 'white', minHeight: '100vh', fontFamily: 'sans-serif' }}>
-      <header style={{ padding: '15px', backgroundColor: '#1e1e1e', borderBottom: '1px solid #333', textAlign: 'center' }}>
-        <h1 style={{ margin: 0, fontSize: '20px', color: '#4caf50' }}>Mercado Once</h1>
+    <div style={{ backgroundColor: '#070D18', color: '#F3F4F6', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
+      
+      {/* Cabecera Principal */}
+      <header style={{ padding: '16px', backgroundColor: '#0B1320', borderBottom: '1px solid #1E293B', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <h1 style={{ margin: 0, fontSize: '20px', color: '#DDA36B', fontWeight: '800', letterSpacing: '0.5px' }}>
+            MERCADO ONCE
+          </h1>
+          <p style={{ margin: '2px 0 0 0', fontSize: '11px', color: '#94A3B8' }}>Todo lo que buscas en un solo lugar</p>
+        </div>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <button 
+            onClick={() => setTipoCuenta('favoritos')} 
+            style={{ backgroundColor: '#1E293B', border: '1px solid #334155', color: '#E8B882', padding: '6px 10px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer' }}
+          >
+            ❤️ ({favoritos.length})
+          </button>
+          <button 
+            onClick={() => setTipoCuenta('carrito')} 
+            style={{ backgroundColor: '#C58547', border: 'none', color: '#070D18', padding: '6px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer' }}
+          >
+            🛒 ({carrito.length})
+          </button>
+        </div>
       </header>
 
-      <main style={{ padding: '15px', paddingBottom: '80px', maxWidth: '600px', margin: '0 auto' }}>
-        {/* Pestañas de navegación */}
-        <div style={{ display: 'flex', marginBottom: '20px', borderBottom: '1px solid #333' }}>
+      <main style={{ padding: '16px', paddingBottom: '90px', maxWidth: '650px', margin: '0 auto' }}>
+        
+        {/* Barra de Búsqueda General */}
+        <div style={{ marginBottom: '16px' }}>
+          <input
+            type="text"
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+            placeholder="Buscar productos o comercios en Once..."
+            style={{
+              width: '100%',
+              padding: '12px 16px',
+              borderRadius: '8px',
+              border: '1px solid #334155',
+              backgroundColor: '#0B1320',
+              color: 'white',
+              fontSize: '14px',
+              boxSizing: 'border-box'
+            }}
+          />
+        </div>
+
+        {/* Barra de Categorías Comerciales de Once */}
+        <div style={{ marginBottom: '16px' }}>
+          <p style={{ fontSize: '11px', color: '#94A3B8', marginBottom: '8px', fontWeight: '600' }}>RUBROS Y CATEGORÍAS:</p>
+          <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '6px' }}>
+            {categoriasOnce.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => { setCategoriaSeleccionada(cat); if(tipoCuenta !== 'comprador') setTipoCuenta('comprador'); }}
+                style={{
+                  padding: '6px 14px',
+                  borderRadius: '20px',
+                  border: categoriaSeleccionada === cat && tipoCuenta === 'comprador' ? '1px solid #C58547' : '1px solid #1E293B',
+                  backgroundColor: categoriaSeleccionada === cat && tipoCuenta === 'comprador' ? '#1C2A44' : '#0B1320',
+                  color: categoriaSeleccionada === cat && tipoCuenta === 'comprador' ? '#E8B882' : '#94A3B8',
+                  fontSize: '12px',
+                  whiteSpace: 'nowrap',
+                  cursor: 'pointer',
+                  fontWeight: categoriaSeleccionada === cat && tipoCuenta === 'comprador' ? 'bold' : 'normal'
+                }}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Pestañas de Navegación del Sistema */}
+        <div style={{ display: 'flex', marginBottom: '20px', backgroundColor: '#0B1320', borderRadius: '8px', border: '1px solid #1E293B', overflow: 'hidden' }}>
           <button
             type="button"
-            onClick={() => setTipoCuenta('comprador')}
+            onClick={() => { setTipoCuenta('comprador'); setProductoSeleccionado(null); }}
             style={{
-              flex: 1, padding: '10px', background: 'none', border: 'none',
-              borderBottom: tipoCuenta === 'comprador' ? '3px solid #4caf50' : 'none',
-              color: tipoCuenta === 'comprador' ? '#4caf50' : '#888',
-              fontWeight: 'bold', fontSize: '13px', cursor: 'pointer'
+              flex: 1, padding: '12px 8px', background: 'none', border: 'none',
+              borderBottom: tipoCuenta === 'comprador' ? '3px solid #C58547' : '3px solid transparent',
+              color: tipoCuenta === 'comprador' ? '#E8B882' : '#94A3B8',
+              fontWeight: 'bold', fontSize: '12px', cursor: 'pointer'
             }}
           >
-            Cliente
+            Catálogo
           </button>
           <button
             type="button"
-            onClick={() => setTipoCuenta('comerciante')}
+            onClick={() => { setTipoCuenta('registro_cliente'); setProductoSeleccionado(null); }}
             style={{
-              flex: 1, padding: '10px', background: 'none', border: 'none',
-              borderBottom: tipoCuenta === 'comerciante' ? '3px solid #4caf50' : 'none',
-              color: tipoCuenta === 'comerciante' ? '#4caf50' : '#888',
-              fontWeight: 'bold', fontSize: '13px', cursor: 'pointer'
+              flex: 1, padding: '12px 8px', background: 'none', border: 'none',
+              borderBottom: tipoCuenta === 'registro_cliente' ? '3px solid #C58547' : '3px solid transparent',
+              color: tipoCuenta === 'registro_cliente' ? '#E8B882' : '#94A3B8',
+              fontWeight: 'bold', fontSize: '12px', cursor: 'pointer'
             }}
           >
-            Comerciante
+            Registro Cliente
           </button>
           <button
             type="button"
-            onClick={() => setTipoCuenta('mensajes')}
+            onClick={() => { setTipoCuenta('comerciante'); setProductoSeleccionado(null); }}
             style={{
-              flex: 1, padding: '10px', background: 'none', border: 'none',
-              borderBottom: tipoCuenta === 'mensajes' ? '3px solid #4caf50' : 'none',
-              color: tipoCuenta === 'mensajes' ? '#4caf50' : '#888',
-              fontWeight: 'bold', fontSize: '13px', cursor: 'pointer'
+              flex: 1, padding: '12px 8px', background: 'none', border: 'none',
+              borderBottom: tipoCuenta === 'comerciante' ? '3px solid #C58547' : '3px solid transparent',
+              color: tipoCuenta === 'comerciante' ? '#E8B882' : '#94A3B8',
+              fontWeight: 'bold', fontSize: '12px', cursor: 'pointer'
             }}
           >
-            Chat / Mensajes
+            Registro Local
+          </button>
+          <button
+            type="button"
+            onClick={() => { setTipoCuenta('mensajes'); setProductoSeleccionado(null); }}
+            style={{
+              flex: 1, padding: '12px 8px', background: 'none', border: 'none',
+              borderBottom: tipoCuenta === 'mensajes' ? '3px solid #C58547' : '3px solid transparent',
+              color: tipoCuenta === 'mensajes' ? '#E8B882' : '#94A3B8',
+              fontWeight: 'bold', fontSize: '12px', cursor: 'pointer'
+            }}
+          >
+            Chat Directo
           </button>
         </div>
 
-        {/* Vistas según la pestaña seleccionada */}
-        {tipoCuenta === 'comprador' && (
-          <div style={{ backgroundColor: '#1e1e1e', padding: '20px', borderRadius: '8px', border: '1px solid #333' }}>
-            <h3 style={{ marginTop: 0, color: '#2196f3' }}>Registro de Cliente</h3>
-            <form onSubmit={handleSubmitCliente} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <input type="text" name="nombre" placeholder="Nombre completo" style={{ padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} />
-              <input type="email" name="email" placeholder="Correo electrónico" style={{ padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} />
-              <input type="password" name="password" placeholder="Contraseña" style={{ padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} />
-              <button type="submit" style={{ backgroundColor: '#2196f3', color: 'white', padding: '12px', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}>
-                Crear cuenta
-              </button>
-            </form>
-          </div>
-        )}
-
-        {tipoCuenta === 'comerciante' && (
-          <div style={{ backgroundColor: '#1e1e1e', padding: '20px', borderRadius: '8px', border: '1px solid #333' }}>
-            <h3 style={{ marginTop: 0, color: '#4caf50' }}>Registro de Local</h3>
-            <form onSubmit={handleSubmitComerciante} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <input type="text" name="nombre" placeholder="Nombre de la Tienda" required style={{ padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} />
-              <input type="text" name="direccion" placeholder="Dirección en Once" required style={{ padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} />
-              <input type="text" name="whatsapp" placeholder="WhatsApp" required style={{ padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} />
-              <input type="text" name="cuit" placeholder="CUIT" required style={{ padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} />
-              <button type="submit" style={{ backgroundColor: '#4caf50', color: 'white', padding: '12px', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}>
-                Registrar comercio
-              </button>
-            </form>
-          </div>
-        )}
-
-        {tipoCuenta === 'mensajes' && (
-          <div style={{ backgroundColor: '#1e1e1e', padding: '20px', borderRadius: '8px', border: '1px solid #333' }}>
-            <h3 style={{ marginTop: 0, color: '#ff9800' }}>Prueba de Mensajería (Chat)</h3>
-            
-            <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
-              <div style={{ flex: 1 }}>
-                <label style={{ fontSize: '11px', color: '#aaa' }}>ID Emisor:</label>
-                <input 
-                  type="number" 
-                  value={emisorId} 
-                  onChange={(e) => setEmisorId(e.target.value)} 
-                  style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} 
-                />
+        {/* VISTA 1: Catálogo de Productos y Filtros */}
+        {tipoCuenta === 'comprador' && !productoSeleccionado && (
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+              <span style={{ fontSize: '13px', color: '#94A3B8' }}>
+                Resultados ({productosFiltrados.length})
+              </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <label style={{ fontSize: '11px', color: '#94A3B8' }}>Precio:</label>
+                <select
+                  value={ordenPrecio}
+                  onChange={(e) => setOrdenPrecio(e.target.value)}
+                  style={{
+                    backgroundColor: '#0B1320',
+                    color: '#E8B882',
+                    border: '1px solid #334155',
+                    borderRadius: '6px',
+                    padding: '4px 8px',
+                    fontSize: '12px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <option value="menor">Menor a Mayor</option>
+                  <option value="mayor">Mayor a Menor</option>
+                </select>
               </div>
-              <div style={{ flex: 1 }}>
-                <label style={{ fontSize: '11px', color: '#aaa' }}>ID Receptor:</label>
-                <input 
-                  type="number" 
-                  value={receptorId} 
-                  onChange={(e) => setReceptorId(e.target.value)} 
-                  style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} 
-                />
-              </div>
-              <button 
-                type="button"
-                onClick={cargarMensajes} 
-                style={{ alignSelf: 'flex-end', padding: '9px 12px', backgroundColor: '#333', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-              >
-                Actualizar
-              </button>
             </div>
 
-            {/* Caja de visualización de mensajes */}
-            <div style={{ backgroundColor: '#121212', height: '200px', borderRadius: '4px', padding: '10px', overflowY: 'auto', marginBottom: '15px', border: '1px solid #333' }}>
+            {/* Grilla de productos */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '14px' }}>
+              {productosFiltrados.map((prod) => {
+                const esFavorito = favoritos.some(f => f.id === prod.id);
+                return (
+                  <div
+                    key={prod.id}
+                    onClick={() => setProductoSeleccionado(prod)}
+                    style={{
+                      backgroundColor: '#0B1320',
+                      borderRadius: '10px',
+                      border: '1px solid #1E293B',
+                      overflow: 'hidden',
+                      cursor: 'pointer',
+                      position: 'relative',
+                      transition: 'border-color 0.2s'
+                    }}
+                  >
+                    <button
+                      onClick={(e) => toggleFavorito(prod, e)}
+                      style={{
+                        position: 'absolute', top: '8px', right: '8px',
+                        backgroundColor: 'rgba(7, 13, 24, 0.8)', border: 'none',
+                        borderRadius: '50%', width: '30px', height: '30px',
+                        cursor: 'pointer', fontSize: '14px', zIndex: 2
+                      }}
+                    >
+                      {esFavorito ? '❤️' : '🤍'}
+                    </button>
+                    <img src={prod.imagen} alt={prod.nombre} style={{ width: '100%', height: '140px', objectFit: 'cover' }} />
+                    <div style={{ padding: '12px' }}>
+                      <span style={{ fontSize: '10px', color: '#C58547', fontWeight: 'bold', textTransform: 'uppercase' }}>
+                        {prod.categoria}
+                      </span>
+                      <h4 style={{ margin: '4px 0 6px 0', fontSize: '13px', color: '#F3F4F6', height: '36px', overflow: 'hidden' }}>
+                        {prod.nombre}
+                      </h4>
+                      <p style={{ margin: '0 0 6px 0', fontSize: '16px', fontWeight: 'bold', color: '#E8B882' }}>
+                        ${prod.precio.toLocaleString('es-AR')}
+                      </p>
+                      <p style={{ margin: 0, fontSize: '11px', color: '#94A3B8' }}>
+                        📍 {prod.comercio}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* VISTA DETALLE DEL PRODUCTO SELECCIONADO */}
+        {tipoCuenta === 'comprador' && productoSeleccionado && (
+          <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
+            <button
+              onClick={() => setProductoSeleccionado(null)}
+              style={{ backgroundColor: '#1E293B', color: '#E8B882', border: 'none', padding: '6px 12px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer', marginBottom: '14px' }}
+            >
+              ← Volver al catálogo
+            </button>
+            <img src={productoSeleccionado.imagen} alt={productoSeleccionado.nombre} style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '8px', marginBottom: '14px' }} />
+            <span style={{ fontSize: '11px', color: '#C58547', fontWeight: 'bold', textTransform: 'uppercase' }}>{productoSeleccionado.categoria}</span>
+            <h2 style={{ margin: '6px 0', fontSize: '18px', color: '#F3F4F6' }}>{productoSeleccionado.nombre}</h2>
+            <p style={{ margin: '0 0 12px 0', fontSize: '22px', fontWeight: 'bold', color: '#E8B882' }}>${productoSeleccionado.precio.toLocaleString('es-AR')}</p>
+            <p style={{ fontSize: '13px', color: '#94A3B8', marginBottom: '16px', lineHeight: '1.4' }}>{productoSeleccionado.descripcion}</p>
+            
+            <div style={{ backgroundColor: '#070D18', padding: '12px', borderRadius: '8px', border: '1px solid #1E293B', marginBottom: '16px' }}>
+              <p style={{ margin: '0 0 4px 0', fontSize: '13px', fontWeight: 'bold', color: '#F3F4F6' }}>🏪 Vendido por: {productoSeleccionado.comercio}</p>
+              <p style={{ margin: 0, fontSize: '11px', color: '#94A3B8' }}>📍 Dirección en Once: {productoSeleccionado.direccion}</p>
+            </div>
+
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button
+                onClick={() => agregarAlCarrito(productoSeleccionado)}
+                style={{ flex: 1, backgroundColor: '#1E293B', color: '#E8B882', border: '1px solid #334155', padding: '12px', borderRadius: '6px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer' }}
+              >
+                🛒 Añadir al Carrito
+              </button>
+              <button
+                onClick={() => {
+                  setTipoCuenta('mensajes');
+                  setProductoSeleccionado(null);
+                }}
+                style={{ flex: 1, backgroundColor: '#C58547', color: '#070D18', border: 'none', padding: '12px', borderRadius: '6px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer' }}
+              >
+                💬 Contactar Local
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* VISTA 2: Registro de Cliente */}
+        {tipoCuenta === 'registro_cliente' && (
+          <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
+            <h3 style={{ margin: '0 0 16px 0', textAlign: 'center', color: '#E8B882' }}>Registro de Cliente</h3>
+            <form onSubmit={handleSubmitCliente} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <input type="text" name="nombre" placeholder="Nombre completo" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white' }} />
+              <input type="email" name="email" placeholder="Correo electrónico" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white' }} />
+              <input type="password" name="password" placeholder="Contraseña" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white' }} />
+              <button type="submit" style={{ backgroundColor: '#C58547', color: '#070D18', border: 'none', padding: '12px', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer', marginTop: '10px' }}>Registrarse</button>
+            </form>
+          </div>
+        )}
+
+        {/* VISTA 3: Registro de Comerciante */}
+        {tipoCuenta === 'comerciante' && (
+          <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
+            <h3 style={{ margin: '0 0 16px 0', textAlign: 'center', color: '#E8B882' }}>Registro de Local / Comerciante</h3>
+            <form onSubmit={handleSubmitComerciante} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <input type="text" name="nombre" placeholder="Nombre del Local / Comercio" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white' }} />
+              <input type="text" name="direccion" placeholder="Dirección en Once (ej: Paso 210)" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white' }} />
+              <input type="text" name="whatsapp" placeholder="WhatsApp de contacto" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white' }} />
+              <input type="text" name="cuit" placeholder="CUIT / Identificación Comercial" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white' }} />
+              <button type="submit" style={{ backgroundColor: '#C58547', color: '#070D18', border: 'none', padding: '12px', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer', marginTop: '10px' }}>Registrar Comercio</button>
+            </form>
+          </div>
+        )}
+
+        {/* VISTA 4: Mensajería / Chat Directo */}
+        {tipoCuenta === 'mensajes' && (
+          <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
+            <h3 style={{ margin: '0 0 10px 0', textAlign: 'center', color: '#E8B882' }}>Negociación Directa</h3>
+            <p style={{ margin: '0 0 16px 0', fontSize: '12px', color: '#94A3B8', textAlign: 'center' }}>Coordiná stock y entregas directamente con el comerciante.</p>
+            
+            <div style={{ display: 'flex', gap: '10px', marginBottom: '14px' }}>
+              <div style={{ flex: 1 }}>
+                <label style={{ fontSize: '10px', color: '#94A3B8' }}>ID Emisor:</label>
+                <input type="text" value={emisorId} onChange={(e) => setEmisorId(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white', boxSizing: 'border-box' }} />
+              </div>
+              <div style={{ flex: 1 }}>
+                <label style={{ fontSize: '10px', color: '#94A3B8' }}>ID Receptor:</label>
+                <input type="text" value={receptorId} onChange={(e) => setReceptorId(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white', boxSizing: 'border-box' }} />
+              </div>
+              <button onClick={cargarMensajes} style={{ alignSelf: 'flex-end', backgroundColor: '#1E293B', color: '#E8B882', border: '1px solid #334155', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}>Actualizar</button>
+            </div>
+
+            <div style={{ minHeight: '200px', maxHeight: '300px', overflowY: 'auto', backgroundColor: '#070D18', padding: '12px', borderRadius: '8px', border: '1px solid #1E293B', marginBottom: '14px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {mensajes.length === 0 ? (
-                <p style={{ color: '#666', textAlign: 'center', fontSize: '13px', marginTop: '70px' }}>No hay mensajes en esta conversación.</p>
+                <p style={{ textAlign: 'center', color: '#64748B', fontSize: '12px', marginTop: '80px' }}>No hay mensajes en esta conversación.</p>
               ) : (
-                mensajes.map((m, idx) => (
-                  <div key={idx} style={{ marginBottom: '8px', padding: '6px 10px', borderRadius: '4px', backgroundColor: m.emisorId === Number(emisorId) ? '#1e3a1e' : '#2a2a2a' }}>
-                    <span style={{ fontSize: '10px', color: '#aaa', display: 'block' }}>De ID {m.emisorId} para ID {m.receptorId}:</span>
-                    <span style={{ fontSize: '13px' }}>{m.texto}</span>
+                mensajes.map((msg, index) => (
+                  <div key={index} style={{ alignSelf: String(msg.emisor_id) === String(emisorId) ? 'flex-end' : 'flex-start', backgroundColor: String(msg.emisor_id) === String(emisorId) ? '#1C2A44' : '#1E293B', color: String(msg.emisor_id) === String(emisorId) ? '#E8B882' : '#F3F4F6', padding: '8px 12px', borderRadius: '8px', maxWidth: '80%', fontSize: '13px' }}>
+                    <p style={{ margin: 0 }}>{msg.texto}</p>
                   </div>
                 ))
               )}
             </div>
 
-            {/* Formulario para enviar mensaje (POST) */}
             <form onSubmit={handleEnviarMensaje} style={{ display: 'flex', gap: '8px' }}>
-              <input 
-                type="text" 
-                value={textoMensaje} 
-                onChange={(e) => setTextoMensaje(e.target.value)} 
-                placeholder="Escribí tu mensaje de prueba..." 
-                style={{ flex: 1, padding: '10px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#2a2a2a', color: 'white' }} 
-              />
-              <button 
-                type="submit" 
-                style={{ backgroundColor: '#ff9800', color: 'white', padding: '0 15px', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}
-              >
-                Enviar
-              </button>
-              </form>
+              <input type="text" value={textoMensaje} onChange={(e) => setTextoMensaje(e.target.value)} placeholder="Escribí tu consulta al comerciante..." style={{ flex: 1, padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white' }} />
+              <button type="submit" style={{ backgroundColor: '#C58547', color: '#070D18', border: 'none', padding: '10px 16px', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' }}>Enviar</button>
+            </form>
           </div>
         )}
+
+        {/* VISTA 5: Carrito */}
+        {tipoCuenta === 'carrito' && (
+          <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
+            <h3 style={{ margin: '0 0 16px 0', color: '#E8B882' }}>Tu Carrito de Compras</h3>
+            {carrito.length === 0 ? (
+              <p style={{ color: '#94A3B8', fontSize: '13px' }}>El carrito está vacío.</p>
+            ) : (
+              <div>
+                {carrito.map((item, index) => (
+                  <div key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid #1E293B' }}>
+                    <div>
+                      <p style={{ margin: 0, fontWeight: 'bold', fontSize: '13px' }}>{item.nombre}</p>
+                      <p style={{ margin: 0, color: '#C58547', fontSize: '12px' }}>${item.precio.toLocaleString('es-AR')}</p>
+                    </div>
+                    <button onClick={() => eliminarDelCarrito(index)} style={{ backgroundColor: '#7F1D1D', color: 'white', border: 'none', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px' }}>Eliminar</button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* VISTA 6: Favoritos */}
+        {tipoCuenta === 'favoritos' && (
+          <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
+            <h3 style={{ margin: '0 0 16px 0', color: '#E8B882' }}>Tus Favoritos</h3>
+            {favoritos.length === 0 ? (
+              <p style={{ color: '#94A3B8', fontSize: '13px' }}>No agregaste productos a favoritos aún.</p>
+            ) : (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '10px' }}>
+                {favoritos.map((prod) => (
+                  <div key={prod.id} style={{ backgroundColor: '#070D18', padding: '10px', borderRadius: '8px', border: '1px solid #1E293B' }}>
+                    <p style={{ margin: '0 0 4px 0', fontSize: '12px', fontWeight: 'bold' }}>{prod.nombre}</p>
+                    <p style={{ margin: 0, color: '#E8B882', fontSize: '12px' }}>${prod.precio.toLocaleString('es-AR')}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
       </main>
     </div>
   );
-} 
+}
