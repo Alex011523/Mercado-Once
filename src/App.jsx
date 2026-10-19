@@ -194,7 +194,7 @@ export default function App() {
       {/* Cabecera Principal */}
       <header style={{ padding: '16px', backgroundColor: '#0B1320', borderBottom: '1px solid #1E293B', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h1 style={{ margin: 0, fontSize: '20px', color: '#DDA36B', fontWeight: '800', letterSpacing: '0.5px' }}>
+          <h1 translate="no" style={{ margin: 0, fontSize: '20px', color: '#DDA36B', fontWeight: '800', letterSpacing: '0.5px' }}>
             MERCADO ONCE
           </h1>
           <p style={{ margin: '2px 0 0 0', fontSize: '11px', color: '#94A3B8' }}>Todo lo que buscas en un solo lugar</p>
@@ -345,7 +345,7 @@ export default function App() {
             </div>
 
             {/* Grilla de productos */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '14px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }}>
               {productosFiltrados.map((prod) => {
                 const esFavorito = favoritos.some(f => f.id === prod.id);
                 return (
