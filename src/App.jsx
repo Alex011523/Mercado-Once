@@ -149,6 +149,7 @@ export default function App() {
       if (respuesta.ok) {
         alert('¡Registro de comerciante guardado con éxito!');
         e.target.reset();
+        setTipoCuenta('comprador');
       } else {
         alert(`Error del servidor: ${resultado.message || JSON.stringify(resultado)}`);
       }
