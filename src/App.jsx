@@ -10,6 +10,7 @@ export default function App() {
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [carrito, setCarrito] = useState([]);
   const [favoritos, setFavoritos] = useState([]);
+  const [comercianteRegistrado, setComercianteRegistrado] = useState(false)
   
   // Estados para la sección de Mensajería
   const [emisorId, setEmisorId] = useState('1');
@@ -149,7 +150,8 @@ export default function App() {
       if (respuesta.ok) {
         alert('¡Registro de comerciante guardado con éxito!');
         e.target.reset();
-        setTipoCuenta('comprador');
+        setComercianteRegistrado(true);
+        setTipoCuenta('comprador'); 
       } else {
         alert(`Error del servidor: ${resultado.message || JSON.stringify(resultado)}`);
       }
@@ -303,6 +305,20 @@ export default function App() {
           >
             Registro Local
           </button>
+          {comercianteRegistrado && (
+    <button
+      type="button"
+      onClick={() => { setTipoCuenta('cargar_producto'); setProductoSeleccionado(null); }}
+      style={{
+        flex: 1, padding: '12px 8px', background: 'none', border: 'none',
+        borderBottom: tipoCuenta === 'cargar_producto' ? '3px solid #C58547' : '3px solid transparent',
+        color: tipoCuenta === 'cargar_producto' ? '#E8B882' : '#94A3B8',
+        fontWeight: 'bold', fontSize: '12px', cursor: 'pointer'
+      }}
+    >
+      Cargar Producto
+    </button>
+  )}
           <button
             type="button"
             onClick={() => { setTipoCuenta('mensajes'); setProductoSeleccionado(null); }}
