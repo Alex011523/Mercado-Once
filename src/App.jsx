@@ -155,7 +155,6 @@ export default function App() {
         localStorage.setItem('comercioMercadoOnce', JSON.stringify(datos));
       setComercioActivo(datos);
         e.target.reset();
-        setComercianteRegistrado(true);
         setTipoCuenta('cargar_producto'); 
       } else {
         alert(`Error del servidor: ${resultado.message || JSON.stringify(resultado)}`);
