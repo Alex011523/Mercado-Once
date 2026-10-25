@@ -547,7 +547,45 @@ export default function App() {
         <option value="Tecnología">Tecnología</option>
         <option value="Hogar y Bazar">Hogar y Bazar</option>
       </select>
-      <input type="text" name="imagen" placeholder="URL de la imagen del producto" required style={{ padding: '10px', borderRadius: '8px', border: '1px solid #334155', backgroundColor: '#0F172A', color: '#FFF' }} />
+      <div style={{ marginBottom: '10px' }}>
+  <label style={{ display: 'block', color: '#94A3B8', fontSize: '12px', marginBottom: '6px' }}>
+    Imagen del producto (Subir archivo)
+  </label>
+  <input 
+    type="file" 
+    accept="image/*"
+    onChange={(e) => {
+      const archivo = e.target.files[0];
+      if (archivo) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImagenProducto(reader.result);
+        };
+        reader.readAsDataURL(archivo);
+      }
+    }}
+    style={{
+      width: '100%',
+      padding: '8px',
+      borderRadius: '8px',
+      border: '1px solid #334155',
+      backgroundColor: '#0F172A',
+      color: '#FFF',
+      fontSize: '13px',
+      cursor: 'pointer',
+      boxSizing: 'border-box'
+    }} 
+  />
+  {imagenProducto && (
+    <div style={{ marginTop: '8px', textAlign: 'center' }}>
+      <img 
+        src={imagenProducto} 
+        alt="Vista previa" 
+        style={{ maxHeight: '100px', borderRadius: '6px', border: '1px solid #334155' }} 
+      />
+    </div>
+  )}
+</div>
       <button type="submit" style={{ backgroundColor: '#C58547', color: '#070D18', border: 'none', padding: '12px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer' }}>Guardar y Publicar Producto</button>
     </form>
   </div>
