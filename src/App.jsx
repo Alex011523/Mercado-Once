@@ -478,6 +478,26 @@ export default function App() {
             </form>
           </div>
         )}
+        {/* VISTA: Cargar Producto */}
+{tipoCuenta === 'cargar_producto' && (
+  <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
+    <h3 style={{ margin: '0 0 16px 0', textAlign: 'center', color: '#E8B882' }}>Cargar Nuevo Producto</h3>
+    <form onSubmit={handleSubmitProducto} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <input type="text" name="nombre" placeholder="Nombre del producto" required style={{ padding: '10px', borderRadius: '8px', border: '1px solid #334155', backgroundColor: '#0F172A', color: '#FFF' }} />
+      <input type="text" name="descripcion" placeholder="Descripción breve" required style={{ padding: '10px', borderRadius: '8px', border: '1px solid #334155', backgroundColor: '#0F172A', color: '#FFF' }} />
+      <input type="number" name="precio" placeholder="Precio en pesos" required style={{ padding: '10px', borderRadius: '8px', border: '1px solid #334155', backgroundColor: '#0F172A', color: '#FFF' }} />
+      <select name="categoria" required style={{ padding: '10px', borderRadius: '8px', border: '1px solid #334155', backgroundColor: '#0F172A', color: '#FFF' }}>
+        <option value="">Selecciona una categoría</option>
+        <option value="Indumentaria">Indumentaria</option>
+        <option value="Marroquinería">Marroquinería</option>
+        <option value="Tecnología">Tecnología</option>
+        <option value="Hogar y Bazar">Hogar y Bazar</option>
+      </select>
+      <input type="text" name="imagen" placeholder="URL de la imagen del producto" required style={{ padding: '10px', borderRadius: '8px', border: '1px solid #334155', backgroundColor: '#0F172A', color: '#FFF' }} />
+      <button type="submit" style={{ backgroundColor: '#C58547', color: '#070D18', border: 'none', padding: '12px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer' }}>Guardar y Publicar Producto</button>
+    </form>
+  </div>
+)}
 
         {/* VISTA 4: Mensajería / Chat Directo */}
         {tipoCuenta === 'mensajes' && (
