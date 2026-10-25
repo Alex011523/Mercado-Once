@@ -190,6 +190,38 @@ export default function App() {
       alert(`Error de conexión: ${error.message}`);
     }
   };
+  const handleSubmitProducto = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const datos = {
+      nombre: formData.get('nombre'),
+      descripcion: formData.get('descripcion'),
+      precio: parseFloat(formData.get('precio')),
+      categoria: formData.get('categoria'),
+      imagen: formData.get('imagen')
+    };
+
+    try {
+      const respuesta = await fetch(${API_BASE_URL}/productos, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datos)
+      });
+      
+      const resultado = await respuesta.json();
+      
+      if (respuesta.ok) {
+        alert('¡Producto guardado con éxito!');
+        e.target.reset();
+        setTipoCuenta('comprador');
+      } else {
+        alert(Error del servidor: ${resultado.error || 'No se pudo guardar'});
+      }
+    } catch (error) {
+      console.error('Error de red:', error);
+      alert('Error de conexión con el servidor.');
+    }
+  };
 
   return (
     <div style={{ backgroundColor: '#070D18', color: '#F3F4F6', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
