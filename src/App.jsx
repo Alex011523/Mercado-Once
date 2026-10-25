@@ -10,7 +10,10 @@ export default function App() {
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [carrito, setCarrito] = useState([]);
   const [favoritos, setFavoritos] = useState([]);
-  const [comercianteRegistrado, setComercianteRegistrado] = useState(false)
+  const [comercioActivo, setComercioActivo] = useState(() => {
+    const guardado = localStorage.getItem('comercioMercadoOnce');
+    return guardado ? JSON.parse(guardado) : null;
+  });
   
   // Estados para la sección de Mensajería
   const [emisorId, setEmisorId] = useState('1');
@@ -149,9 +152,11 @@ export default function App() {
       const resultado = await respuesta.json();
       if (respuesta.ok) {
         alert('¡Registro de comerciante guardado con éxito!');
+        localStorage.setItem('comercioMercadoOnce', JSON.stringify(datos));
+      setComercioActivo(datos);
         e.target.reset();
         setComercianteRegistrado(true);
-        setTipoCuenta('comprador'); 
+        setTipoCuenta('cargar_producto'); 
       } else {
         alert(`Error del servidor: ${resultado.message || JSON.stringify(resultado)}`);
       }
@@ -337,19 +342,37 @@ export default function App() {
           >
             Registro Local
           </button>
-          {comercianteRegistrado && (
-    <button
-      type="button"
-      onClick={() => { setTipoCuenta('cargar_producto'); setProductoSeleccionado(null); }}
-      style={{
-        flex: 1, padding: '12px 8px', background: 'none', border: 'none',
-        borderBottom: tipoCuenta === 'cargar_producto' ? '3px solid #C58547' : '3px solid transparent',
-        color: tipoCuenta === 'cargar_producto' ? '#E8B882' : '#94A3B8',
-        fontWeight: 'bold', fontSize: '12px', cursor: 'pointer'
-      }}
-    >
-      Cargar Producto
-    </button>
+         {comercioActivo && (
+    <>
+      <button
+        type="button"
+        onClick={() => { setTipoCuenta('cargar_producto'); setProductoSeleccionado(null); }}
+        style={{
+          flex: 1, padding: '12px 8px', background: 'none', border: 'none',
+          borderBottom: tipoCuenta === 'cargar_producto' ? '3px solid #C58547' : '3px solid transparent',
+          color: tipoCuenta === 'cargar_producto' ? '#E8B882' : '#94A3B8',
+          fontWeight: 'bold', fontSize: '12px', cursor: 'pointer'
+        }}
+      >
+        Cargar Producto
+      </button>
+
+      <button
+        type="button"
+        onClick={() => {
+          localStorage.removeItem('comercioMercadoOnce');
+          setComercioActivo(null);
+          setTipoCuenta('comprador');
+          alert('Has cerrado sesión correctamente.');
+        }}
+        style={{
+          padding: '6px 10px', background: '#334155', border: 'none',
+          color: '#F3F4F6', borderRadius: '6px', fontSize: '11px', fontWeight: 'bold', cursor: 'pointer', margin: 'auto 6px'
+        }}
+      >
+        Cerrar Sesión
+      </button>
+    </>
   )}
           <button
             type="button"
