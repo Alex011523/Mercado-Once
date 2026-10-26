@@ -9,6 +9,7 @@ export default function App() {
   const [ordenPrecio, setOrdenPrecio] = useState('menor');
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [carrito, setCarrito] = useState([]);
+  const [imagenProducto, setImagenProducto] = useState('');
   const [favoritos, setFavoritos] = useState([]);
   const [comercioActivo, setComercioActivo] = useState(() => {
     const guardado = localStorage.getItem('comercioMercadoOnce');
