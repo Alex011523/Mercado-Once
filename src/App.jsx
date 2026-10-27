@@ -553,9 +553,14 @@ export default function App() {
       e.preventDefault();
       const cuitIngresado = e.target.cuitLogin.value.trim();
       
-      const comerciosGuardados = JSON.parse(localStorage.getItem('comerciosMercadoOnce')) || [];
-      const comercioEncontrado = comerciosGuardados.find(c => c.cuit === cuitIngresado);
+     const datoGuardado = JSON.parse(localStorage.getItem('comerciosMercadoOnce'));
+let comercioEncontrado = null;
 
+if (Array.isArray(datoGuardado)) {
+  comercioEncontrado = datoGuardado.find(c => c.cuit === cuitIngresado);
+} else if (datoGuardado && datoGuardado.cuit === cuitIngresado) {
+  comercioEncontrado = datoGuardado;
+}
       if (comercioEncontrado) {
         setComercioActivo(comercioEncontrado);
         localStorage.setItem('comercioMercadoOnce', JSON.stringify(comercioEncontrado));
