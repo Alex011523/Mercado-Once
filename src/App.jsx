@@ -342,6 +342,18 @@ export default function App() {
           >
             Registro Local
           </button>
+          <button
+  type="button"
+  onClick={() => { setTipoCuenta('iniciar_sesion'); setProductoSeleccionado(null); }}
+  style={{
+    flex: 1, padding: '12px 8px', background: 'none', border: 'none',
+    borderBottom: tipoCuenta === 'iniciar_sesion' ? '3px solid #C58547' : '3px solid transparent',
+    color: tipoCuenta === 'iniciar_sesion' ? '#E8B882' : '#94A3B8',
+    fontWeight: 'bold', fontSize: '12px', cursor: 'pointer'
+  }}
+>
+  Iniciar Sesión
+</button>
          {comercioActivo && (
     <>
       <button
@@ -533,6 +545,42 @@ export default function App() {
             </form>
           </div>
         )}
+        {/* VISTA: Iniciar Sesión de Comerciante */}
+{tipoCuenta === 'iniciar_sesion' && (
+  <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
+    <h3 style={{ margin: '0 0 16px 0', textAlign: 'center', color: '#E8B882' }}>Iniciar Sesión / Comerciante</h3>
+    <form onSubmit={(e) => {
+      e.preventDefault();
+      const cuitIngresado = e.target.cuitLogin.value.trim();
+      
+      const comerciosGuardados = JSON.parse(localStorage.getItem('comerciosMercadoOnce')) || [];
+      const comercioEncontrado = comerciosGuardados.find(c => c.cuit === cuitIngresado);
+
+      if (comercioEncontrado) {
+        setComercioActivo(comercioEncontrado);
+        localStorage.setItem('comercioMercadoOnce', JSON.stringify(comercioEncontrado));
+        alert(¡Bienvenido de nuevo, ${comercioEncontrado.nombre}!);
+        setTipoCuenta('cargar_producto');
+      } else {
+        alert('No se encontró ningún comercio registrado con ese CUIT. Verifica los datos o regístrate.');
+      }
+    }} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <input 
+        type="text" 
+        name="cuitLogin" 
+        placeholder="CUIT / Identificación Comercial" 
+        required 
+        style={{ padding: '10px', borderRadius: '8px', border: '1px solid #1E293B', background: '#0F172A', color: '#FFF' }}
+      />
+      <button 
+        type="submit" 
+        style={{ backgroundColor: '#C58547', color: '#070D18', border: 'none', padding: '12px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer' }}
+      >
+        Entrar al Panel
+      </button>
+    </form>
+  </div>
+)}
         {/* VISTA: Cargar Producto */}
 {tipoCuenta === 'cargar_producto' && (
   <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
