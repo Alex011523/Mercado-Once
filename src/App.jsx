@@ -153,7 +153,7 @@ export default function App() {
       const resultado = await respuesta.json();
       if (respuesta.ok) {
         alert('¡Registro de comerciante guardado con éxito!');
-        localStorage.setItem('comercioMercadoOnce', JSON.stringify(datos));
+        localStorage.setItem('comerciosMercadoOnce', JSON.stringify(datos));
       setComercioActivo(datos);
         e.target.reset();
         setTipoCuenta('cargar_producto'); 
