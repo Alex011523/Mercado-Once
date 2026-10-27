@@ -564,7 +564,7 @@ if (Array.isArray(datoGuardado)) {
       if (comercioEncontrado) {
         setComercioActivo(comercioEncontrado);
         localStorage.setItem('comercioMercadoOnce', JSON.stringify(comercioEncontrado));
-        alert(`¡Bienvenido de nuevo, ${comercioEncontrado.nombre}!`);
+        alert(`Bienvenido de nuevo, ${comercioEncontrado.nombre}!`);
         setTipoCuenta('cargar_producto');
       } else {
         alert('No se encontró ningún comercio registrado con ese CUIT. Verifica los datos o regístrate.');
