@@ -162,7 +162,7 @@ export default function App() {
         e.target.reset();
         setTipoCuenta('cargar_producto'); 
       } else {
-        alert(Error del servidor: ${resultado.message || JSON.stringify(resultado)});
+        alert(`Error del servidor: ${resultado.message || JSON.stringify(resultado)}`);
       }
     } catch (error) {
       console.error('Error de red:', error);
