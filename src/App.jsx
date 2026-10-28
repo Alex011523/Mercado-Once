@@ -197,7 +197,7 @@ export default function App() {
       setTipoCuenta('comprador');
     } catch (error) {
       console.error('Error de red:', error);
-      alert(Error de conexión: ${error.message});
+      alert(`Error de conexión: ${error.message}`);
     }
   };
 
