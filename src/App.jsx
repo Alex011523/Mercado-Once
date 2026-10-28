@@ -88,7 +88,7 @@ export default function App() {
   const cargarMensajes = async () => {
     if (!emisorId || !receptorId) return;
     try {
-      const respuesta = await fetch(${API_BASE_URL}/mensajes/${emisorId}/${receptorId});
+      const respuesta = await fetch(`${API_BASE_URL}/mensajes/${emisorId}/${receptorId}`);
       const resultado = await respuesta.json();
       if (resultado.ok) {
         setMensajes(resultado.conversacion || []);
