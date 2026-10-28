@@ -149,7 +149,7 @@ export default function App() {
     };
 
     try {
-      const respuesta = await fetch(${API_BASE_URL}/comerciantes, {
+      const respuesta = await fetch(`${API_BASE_URL}/comerciantes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos)
