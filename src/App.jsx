@@ -184,7 +184,7 @@ export default function App() {
 
       if (!respuesta.ok) {
         const errorTexto = await respuesta.text();
-        alert(Error del servidor (${respuesta.status}): ${errorTexto});
+        alert(`Error del servidor (${respuesta.status}): ${errorTexto}`);
         return;
       }
 
