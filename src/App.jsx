@@ -417,7 +417,6 @@ export default function App() {
               </div>
             </div>
 
-          </div>
         )}
 
         {/* DETALLE DE PRODUCTO */}
