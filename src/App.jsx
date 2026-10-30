@@ -220,7 +220,7 @@ export default function App() {
         e.target.reset();
         setTipoCuenta('comprador');
       } else {
-        alert(Error del servidor: ${resultado.error || 'No se pudo guardar'});
+        alert(`Error del servidor: ${resultado.error || 'No se pudo guardar'}`);
       }
     } catch (error) {
       console.error('Error de red:', error);
