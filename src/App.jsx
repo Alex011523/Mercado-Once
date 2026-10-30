@@ -55,7 +55,7 @@ export default function App() {
   // Funciones de Carrito y Favoritos
   const agregarAlCarrito = (producto) => {
     setCarrito([...carrito, producto]);
-    alert(`¡${producto.nombre} agregado al carrito!`);
+    alert(¡${producto.nombre} agregado al carrito!);
   };
 
   const eliminarDelCarrito = (indexParaEliminar) => {
@@ -88,7 +88,7 @@ export default function App() {
   const cargarMensajes = async () => {
     if (!emisorId || !receptorId) return;
     try {
-      const respuesta = await fetch(`${API_BASE_URL}/mensajes/${emisorId}/${receptorId}`);
+      const respuesta = await fetch(${API_BASE_URL}/mensajes/${emisorId}/${receptorId});
       const resultado = await respuesta.json();
       if (resultado.ok) {
         setMensajes(resultado.conversacion || []);
@@ -118,7 +118,7 @@ export default function App() {
     };
 
     try {
-      const respuesta = await fetch(`${API_BASE_URL}/mensajes`, {
+      const respuesta = await fetch(${API_BASE_URL}/mensajes, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos)
@@ -130,7 +130,7 @@ export default function App() {
         setTextoMensaje('');
         cargarMensajes();
       } else {
-        alert(`Error al enviar mensaje: ${resultado.error || 'Desconocido'}`);
+        alert(Error al enviar mensaje: ${resultado.error || 'Desconocido'});
       }
     } catch (error) {
       console.error('Error de red:', error);
@@ -149,7 +149,7 @@ export default function App() {
     };
 
     try {
-      const respuesta = await fetch(`${API_BASE_URL}/comerciantes`, {
+      const respuesta = await fetch(${API_BASE_URL}/comerciantes, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos)
@@ -162,11 +162,11 @@ export default function App() {
         e.target.reset();
         setTipoCuenta('cargar_producto'); 
       } else {
-        alert(`Error del servidor: ${resultado.message || JSON.stringify(resultado)}`);
+        alert(Error del servidor: ${resultado.message || JSON.stringify(resultado)});
       }
     } catch (error) {
       console.error('Error de red:', error);
-      alert(`Error de conexión: ${error.message}`);
+      alert(Error de conexión: ${error.message});
     }
   };
 
@@ -180,7 +180,7 @@ export default function App() {
     };
 
     try {
-      const respuesta = await fetch(`${API_BASE_URL}/clientes`, {
+      const respuesta = await fetch(${API_BASE_URL}/clientes, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos)
@@ -188,7 +188,7 @@ export default function App() {
 
       if (!respuesta.ok) {
         const errorTexto = await respuesta.text();
-        alert(`Error del servidor (${respuesta.status}): ${errorTexto}`);
+        alert(Error del servidor (${respuesta.status}): ${errorTexto});
         return;
       }
 
@@ -197,7 +197,7 @@ export default function App() {
       setTipoCuenta('comprador');
     } catch (error) {
       console.error('Error de red:', error);
-      alert(`Error de conexión: ${error.message}`);
+      alert(Error de conexión: ${error.message});
     }
   };
 
@@ -213,7 +213,7 @@ export default function App() {
     };
 
     try {
-      const respuesta = await fetch(`${API_BASE_URL}/productos`, {
+      const respuesta = await fetch(${API_BASE_URL}/productos, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos)
@@ -226,7 +226,7 @@ export default function App() {
         e.target.reset();
         setTipoCuenta('comprador');
       } else {
-        alert(`Error del servidor: ${resultado.error || 'No se pudo guardar'}`);
+        alert(Error del servidor: ${resultado.error || 'No se pudo guardar'});
       }
     } catch (error) {
       console.error('Error de red:', error);
@@ -237,7 +237,7 @@ export default function App() {
   return (
     <div style={{ backgroundColor: '#070D18', color: '#F3F4F6', minHeight: '100vh', fontFamily: 'system-ui, sans-serif', paddingBottom: '90px' }}>
       
-     {/* HEADER PRINCIPAL ENMARCADO CON LOGO Y ESLOGAN */}
+      {/* HEADER PRINCIPAL ENMARCADO CON LOGO Y ESLOGAN */}
       <header style={{ padding: '16px', backgroundColor: '#070D18', display: 'flex', justifyContent: 'center' }}>
         <div style={{ 
           display: 'flex', 
@@ -252,7 +252,7 @@ export default function App() {
           boxShadow: '0 4px 15px rgba(197, 133, 71, 0.15)',
           boxSizing: 'border-box' 
         }}>
-          {/* Logo oficial circular con engranaje y carrito */}
+          {/* Logo oficial circular */}
           <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '1px solid #C58547', flexShrink: 0, overflow: 'hidden' }}>
             <img src="/logo.png" alt="Mercado Once Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
@@ -365,81 +365,53 @@ export default function App() {
           </div>
         </div>
 
-        {/* VISTA 1: Catálogo de Productos y Filtros */}
+        {/* VISTA 1: Catálogo con Carruseles Dinámicos */}
         {tipoCuenta === 'comprador' && !productoSeleccionado && (
-          <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-              <span style={{ fontSize: '13px', color: '#94A3B8' }}>
-                Resultados ({productosFiltrados.length})
-              </span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <label style={{ fontSize: '11px', color: '#94A3B8' }}>Precio:</label>
-                <select
-                  value={ordenPrecio}
-                  onChange={(e) => setOrdenPrecio(e.target.value)}
-                  style={{
-                    backgroundColor: '#0B1320',
-                    color: '#E8B882',
-                    border: '1px solid #334155',
-                    borderRadius: '6px',
-                    padding: '4px 8px',
-                    fontSize: '12px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <option value="menor">Menor a Mayor</option>
-                  <option value="mayor">Mayor a Menor</option>
-                </select>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            
+            {/* CARRUSEL 1: Novedades para el Hogar */}
+            <div style={{ border: '1px solid #1E293B', borderRadius: '14px', padding: '14px', backgroundColor: '#0B1320' }}>
+              <h3 style={{ margin: '0 0 4px 0', fontSize: '15px', color: '#E8B882', fontWeight: 'bold' }}>Novedades para el Hogar</h3>
+              <p style={{ margin: '0 0 12px 0', fontSize: '11px', color: '#94A3B8' }}>Buscar esa hogar</p>
+              
+              <div style={{ display: 'flex', gap: '12px', overflowX: 'auto', paddingBottom: '8px' }}>
+                {productosEjemplo.filter(p => p.categoria === 'Hogar y Bazar' || p.categoria === 'Tecnología').map((prod) => (
+                  <div key={prod.id} onClick={() => setProductoSeleccionado(prod)} style={{ minWidth: '130px', maxWidth: '130px', backgroundColor: '#162032', borderRadius: '10px', padding: '8px', cursor: 'pointer', flexShrink: 0, border: '1px solid #1E293B' }}>
+                    <img src={prod.imagen} alt={prod.nombre} style={{ width: '100%', height: '90px', objectFit: 'cover', borderRadius: '6px' }} />
+                    <h5 style={{ margin: '6px 0 2px 0', fontSize: '11px', color: '#F3F4F6', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{prod.nombre}</h5>
+                    <p style={{ margin: 0, fontSize: '12px', color: '#E8B882', fontWeight: 'bold' }}>${prod.precio.toLocaleString()}</p>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Grilla de productos */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }}>
-              {productosFiltrados.map((prod) => {
-                const esFavorito = favoritos.some(f => f.id === prod.id);
-                return (
-                  <div
-                    key={prod.id}
-                    onClick={() => setProductoSeleccionado(prod)}
-                    style={{
-                      backgroundColor: '#0B1320',
-                      borderRadius: '10px',
-                      border: '1px solid #1E293B',
-                      overflow: 'hidden',
-                      cursor: 'pointer',
-                      position: 'relative'
-                    }}
-                  >
-                    <button
-                      onClick={(e) => toggleFavorito(prod, e)}
-                      style={{
-                        position: 'absolute', top: '8px', right: '8px',
-                        backgroundColor: 'rgba(7, 13, 24, 0.8)', border: 'none',
-                        borderRadius: '50%', width: '30px', height: '30px',
-                        cursor: 'pointer', fontSize: '14px', zIndex: 2
-                      }}
-                    >
-                      {esFavorito ? '❤️' : '🤍'}
-                    </button>
-                    <img src={prod.imagen} alt={prod.nombre} style={{ width: '100%', height: '140px', objectFit: 'cover' }} />
-                    <div style={{ padding: '12px' }}>
-                      <span style={{ fontSize: '10px', color: '#C58547', fontWeight: 'bold', textTransform: 'uppercase' }}>
-                        {prod.categoria}
-                      </span>
-                      <h4 style={{ margin: '4px 0 6px 0', fontSize: '13px', color: '#F3F4F6', height: '36px', overflow: 'hidden' }}>
-                        {prod.nombre}
-                      </h4>
-                      <p style={{ margin: 0, fontSize: '15px', fontWeight: 'bold', color: '#E8B882' }}>
-                        ${prod.precio.toLocaleString()}
-                      </p>
-                      <p style={{ margin: '4px 0 0 0', fontSize: '10px', color: '#94A3B8' }}>
-                        📍 {prod.comercio}
-                      </p>
-                    </div>
+            {/* CARRUSEL 2: Tus Favoritos de Siempre */}
+            <div>
+              <h3 style={{ margin: '0 0 12px 0', fontSize: '15px', color: '#E8B882', fontWeight: 'bold' }}>Tus Favoritos de Siempre</h3>
+              <div style={{ display: 'flex', gap: '12px', overflowX: 'auto', paddingBottom: '8px' }}>
+                {productosEjemplo.map((prod) => (
+                  <div key={prod.id} onClick={() => setProductoSeleccionado(prod)} style={{ minWidth: '130px', maxWidth: '130px', backgroundColor: '#0B1320', borderRadius: '10px', padding: '10px', cursor: 'pointer', flexShrink: 0, border: '1px solid #C58547' }}>
+                    <img src={prod.imagen} alt={prod.nombre} style={{ width: '100%', height: '100px', objectFit: 'cover', borderRadius: '6px' }} />
+                    <h5 style={{ margin: '8px 0 2px 0', fontSize: '11px', color: '#F3F4F6', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{prod.nombre}</h5>
+                    <p style={{ margin: 0, fontSize: '12px', color: '#E8B882', fontWeight: 'bold' }}>${prod.precio.toLocaleString()}</p>
                   </div>
-                );
-              })}
+                ))}
+              </div>
             </div>
+
+            {/* CARRUSEL 3: Categorías Populares */}
+            <div>
+              <h3 style={{ margin: '0 0 12px 0', fontSize: '15px', color: '#E8B882', fontWeight: 'bold' }}>Categorías Populares</h3>
+              <div style={{ display: 'flex', gap: '10px', overflowX: 'auto', paddingBottom: '8px' }}>
+                {['Electrónica', 'Moda', 'Categorías', 'Producciones', 'Otras'].map((cat, idx) => (
+                  <div key={idx} style={{ minWidth: '85px', height: '75px', backgroundColor: '#0B1320', border: '1px solid #1E293B', borderRadius: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexShrink: 0, cursor: 'pointer' }}>
+                    <span style={{ fontSize: '18px', color: '#E8B882' }}>📱</span>
+                    <span style={{ fontSize: '10px', color: '#94A3B8', marginTop: '4px' }}>{cat}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </div>
         )}
 
