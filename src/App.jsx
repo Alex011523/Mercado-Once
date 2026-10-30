@@ -51,7 +51,7 @@ export default function App() {
   // Funciones de Carrito y Favoritos
   const agregarAlCarrito = (producto) => {
     setCarrito([...carrito, producto]);
-    alert(¡${producto.nombre} agregado al carrito!);
+    alert(`¡${producto.nombre} agregado al carrito!`);
   };
 
   const eliminarDelCarrito = (indexParaEliminar) => {
