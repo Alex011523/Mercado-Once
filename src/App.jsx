@@ -162,7 +162,7 @@ export default function App() {
       }
     } catch (error) {
       console.error('Error de red:', error);
-      alert(Error de conexión: ${error.message});
+      alert(`Error de conexión: ${error.message}`);
     }
   };
 
