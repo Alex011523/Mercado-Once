@@ -725,5 +725,81 @@ if (Array.isArray(datoGuardado)) {
 
       </main>
     </div>
-  );
+
+      {/* Botón flotante para generar el QR */}
+      <button 
+        onClick={() => setMostrarQR(true)}
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          backgroundColor: '#25D366',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '50px',
+          padding: '10px 20px',
+          cursor: 'pointer',
+          boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+          zIndex: 1000,
+          fontWeight: 'bold'
+        }}
+      >
+        📱 Mostrar QR de Acceso
+      </button>
+
+      {/* Modal del Código QR */}
+      {mostrarQR && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 1100
+        }}>
+          <div style={{
+            backgroundColor: '#fff',
+            padding: '25px',
+            borderRadius: '12px',
+            textAlign: 'center',
+            maxWidth: '320px',
+            boxShadow: '0 5px 15px rgba(0,0,0,0.3)'
+          }}>
+            <h3 style={{ margin: '0 0 10px 0', color: '#333' }}>¡Escaneá para ingresar!</h3>
+            <p style={{ fontSize: '14px', color: '#666', marginBottom: '15px' }}>
+              Abre la cámara de tu celular para entrar a Mercado Once.
+            </p>
+            
+            <img 
+              src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://mercado-once.vercel.app" 
+              alt="Código QR Mercado Once" 
+              style={{ border: '3px solid #eee', borderRadius: '8px', marginBottom: '15px' }}
+            />
+            
+            <br />
+            
+            <button 
+              onClick={() => setMostrarQR(false)}
+              style={{
+                backgroundColor: '#ff4d4d',
+                color: '#fff',
+                border: 'none',
+                padding: '8px 20px',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontWeight: 'bold'
+              }}
+            >
+              Cerrar
+          </button>
+        </div>
+      </div>
+    )}
+
+  </div>
+);
 }
