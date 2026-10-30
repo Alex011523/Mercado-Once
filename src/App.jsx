@@ -130,7 +130,7 @@ export default function App() {
         setTextoMensaje('');
         cargarMensajes();
       } else {
-        alert(Error al enviar mensaje: ${resultado.error || 'Desconocido'});
+        alert(`Error al enviar mensaje: ${resultado.error || 'Desconocido'}`);
       }
     } catch (error) {
       console.error('Error de red:', error);
