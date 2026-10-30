@@ -372,7 +372,7 @@ export default function App() {
             {/* CARRUSEL 1: Novedades para el Hogar */}
             <div style={{ border: '1px solid #1E293B', borderRadius: '14px', padding: '14px', backgroundColor: '#0B1320' }}>
               <h3 style={{ margin: '0 0 4px 0', fontSize: '15px', color: '#E8B882', fontWeight: 'bold' }}>Novedades para el Hogar</h3>
-              <p style={{ margin: '0 0 12px 0', fontSize: '11px', color: '#94A3B8' }}>Buscar esa hogar</p>
+              <p style={{ margin: '0 0 12px 0', fontSize: '11px', color: '#94A3B8' }}>Lo más destacado en blanquería y confort</p>
               
               <div style={{ display: 'flex', gap: '12px', overflowX: 'auto', paddingBottom: '8px' }}>
                 {productosEjemplo.filter(p => p.categoria === 'Hogar y Bazar' || p.categoria === 'Tecnología').map((prod) => (
@@ -403,12 +403,17 @@ export default function App() {
             <div>
               <h3 style={{ margin: '0 0 12px 0', fontSize: '15px', color: '#E8B882', fontWeight: 'bold' }}>Categorías Populares</h3>
               <div style={{ display: 'flex', gap: '10px', overflowX: 'auto', paddingBottom: '8px' }}>
-                {['Electrónica', 'Moda', 'Categorías', 'Producciones', 'Otras'].map((cat, idx) => (
-                  <div key={idx} style={{ minWidth: '85px', height: '75px', backgroundColor: '#0B1320', border: '1px solid #1E293B', borderRadius: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexShrink: 0, cursor: 'pointer' }}>
-                    <span style={{ fontSize: '18px', color: '#E8B882' }}>📱</span>
-                    <span style={{ fontSize: '10px', color: '#94A3B8', marginTop: '4px' }}>{cat}</span>
+                {['Electrónica', 'Moda', 'Indumentaria', 'Marroquinería', 'Calzado'].map((cat, idx) => (
+                  <div key={idx} onClick={() => setCategoriaSeleccionada(cat)} style={{ minWidth: '85px', height: '75px', backgroundColor: '#0B1320', border: '1px solid #1E293B', borderRadius: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexShrink: 0, cursor: 'pointer' }}>
+                    <span style={{ fontSize: '18px', color: '#E8B882' }}>🛍️</span>
+                    <span style={{ fontSize: '10px', color: '#94A3B8', marginTop: '4px', textAlign: 'center' }}>{cat}</span>
                   </div>
                 ))}
+              </div>
+            </div>
+
+          </div>
+        )}
               </div>
             </div>
 
