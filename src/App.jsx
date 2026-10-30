@@ -237,18 +237,32 @@ export default function App() {
   return (
     <div style={{ backgroundColor: '#070D18', color: '#F3F4F6', minHeight: '100vh', fontFamily: 'system-ui, sans-serif', paddingBottom: '90px' }}>
       
-      {/* HEADER PRINCIPAL ENMARCADO CON LOGO Y ESLOGAN */}
-      <header style={{ padding: '16px', backgroundColor: '#0B1320', borderBottom: '1px solid #1E293B', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', border: '1px solid #334155', padding: '10px 16px', borderRadius: '12px', backgroundColor: '#0f172a', width: '100%', maxWidth: '400px', boxSizing: 'border-box' }}>
-          {/* Logo oficial ajustado */}
-          <div style={{ width: '42px', height: '42px', borderRadius: '50%', backgroundColor: '#1C2A44', display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid #C58547', flexShrink: '0', overflow: 'hidden' }}>
-            <span style={{ fontSize: '20px' }}>🛒</span>
+     {/* HEADER PRINCIPAL ENMARCADO CON LOGO Y ESLOGAN */}
+      <header style={{ padding: '16px', backgroundColor: '#070D18', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: '14px', 
+          border: '2px solid #C58547', 
+          padding: '12px 20px', 
+          borderRadius: '16px', 
+          backgroundColor: '#0B1320', 
+          width: '100%', 
+          maxWidth: '450px', 
+          boxShadow: '0 4px 15px rgba(197, 133, 71, 0.15)',
+          boxSizing: 'border-box' 
+        }}>
+          {/* Logo oficial circular con engranaje y carrito */}
+          <div style={{ width: '52px', height: '52px', borderRadius: '50%', border: '1px solid #C58547', flexShrink: 0, overflow: 'hidden' }}>
+            <img src="/logo.png" alt="Mercado Once Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
           <div style={{ textAlign: 'left', flex: 1 }}>
-            <h1 translate="no" style={{ margin: 0, fontSize: '18px', color: '#E8B882', fontWeight: '800', letterSpacing: '0.5px' }}>
+            <h1 translate="no" style={{ margin: 0, fontSize: '20px', color: '#E8B882', fontWeight: '800', letterSpacing: '0.5px' }}>
               Mercado Once
             </h1>
-            <p style={{ margin: '2px 0 0 0', fontSize: '11px', color: '#94A3B8' }}>Todo lo que buscas en un solo lugar</p>
+            <p style={{ margin: '2px 0 0 0', fontSize: '11px', color: '#94A3B8', fontWeight: '500' }}>
+              Todo lo que buscas en un solo lugar
+            </p>
           </div>
         </div>
       </header>
