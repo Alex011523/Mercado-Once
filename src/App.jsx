@@ -207,7 +207,7 @@ export default function App() {
     };
 
     try {
-      const respuesta = await fetch(${API_BASE_URL}/productos, {
+      const respuesta = await fetch(`${API_BASE_URL}/productos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos)
