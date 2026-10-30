@@ -414,7 +414,7 @@ export default function App() {
 
           </div>
         )}
-              </div>
+              </main>
             </div>
 
         )}
@@ -557,7 +557,6 @@ export default function App() {
           </div>
         )}
 
-      </main>
 
       {/* BARRA DE NAVEGACIÓN INFERIOR (ESTILO APP NATIVA MÓVIL) */}
       <nav style={{
