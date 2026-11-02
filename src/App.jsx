@@ -723,10 +723,6 @@ if (Array.isArray(datoGuardado)) {
             )}
           </div>
         )}
-
-      </main>
-    </div>
-
       {/* Botón flotante para generar el QR */}
       <button 
         onClick={() => setMostrarQR(true)}
@@ -804,3 +800,5 @@ if (Array.isArray(datoGuardado)) {
   </div>
 );
 }
+      </main>
+
