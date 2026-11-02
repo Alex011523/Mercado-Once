@@ -11,6 +11,7 @@ export default function App() {
   const [carrito, setCarrito] = useState([]);
   const [imagenProducto, setImagenProducto] = useState('');
   const [favoritos, setFavoritos] = useState([]);
+  const [mostrarQR, setMostrarQR] = useState(false);
   const [comercioActivo, setComercioActivo] = useState(() => {
     const guardado = localStorage.getItem('comercioMercadoOnce');
     return guardado ? JSON.parse(guardado) : null;
