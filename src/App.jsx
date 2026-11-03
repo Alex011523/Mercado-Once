@@ -792,13 +792,12 @@ if (Array.isArray(datoGuardado)) {
               }}
             >
               Cerrar
-          </button>
+</button>
+          </div>
         </div>
-      </div>
-    )}
+      )}
 
-  </div>
-);
-}
       </main>
-
+    </div>
+  );
+}
