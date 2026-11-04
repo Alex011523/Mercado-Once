@@ -142,7 +142,8 @@ export default function App() {
       nombre: formData.get('nombre'),
       direccion: formData.get('direccion'),
       whatsapp: formData.get('whatsapp'),
-      cuit: formData.get('cuit')
+      cuit: formData.get('cuit'),
+      categorias: formData.getAll('categorias')
     };
 
     try {
