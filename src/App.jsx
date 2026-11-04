@@ -152,12 +152,18 @@ export default function App() {
         body: JSON.stringify(datos)
       });
       const resultado = await respuesta.json();
-      if (respuesta.ok) {
+    if (respuesta.ok) {
+      const numeroSocio = resultado.id || resultado.comercio?.id || 1;
+      if (numeroSocio <= 50) {
+        alert(`¡Felicidades! Sos el miembro número #${numeroSocio} y tenés tus 60 días de membresía gratis.`);
+      } else {
         alert('¡Registro de comerciante guardado con éxito!');
-        localStorage.setItem('comerciosMercadoOnce', JSON.stringify(datos));
+      }
+      localStorage.setItem('comerciosMercadoOnce', JSON.stringify(datos));
       setComercioActivo(datos);
-        e.target.reset();
-        setTipoCuenta('cargar_producto'); 
+      e.target.reset();
+      setTipoCuenta('cargar_producto');
+    } 
       } else {
         alert(`Error del servidor: ${resultado.message || JSON.stringify(resultado)}`);
       }
