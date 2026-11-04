@@ -196,7 +196,7 @@ export default function App() {
       alert(`Error de conexión: ${error.message}`);
     }
   };
-  const handleSubmitProducto = async (e) => {
+ const handleSubmitProducto = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const datos = {
@@ -204,7 +204,7 @@ export default function App() {
       descripcion: formData.get('descripcion'),
       precio: parseFloat(formData.get('precio')),
       categoria: formData.get('categoria'),
-      imagen: formData.get('imagen')
+      imagen: imagenProducto
     };
 
     try {
@@ -219,6 +219,7 @@ export default function App() {
       if (respuesta.ok) {
         alert('¡Producto guardado con éxito!');
         e.target.reset();
+        setImagenProducto('');
         setTipoCuenta('comprador');
       } else {
         alert(`Error del servidor: ${resultado.error || 'No se pudo guardar'}`);
