@@ -203,29 +203,29 @@ export default function App() {
       alert(`Error de conexión: ${error.message}`);
     }
   };
- const handleSubmitProducto = async (e) => {
+const handleSubmitProducto = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const datos = {
-      nombre: formData.get('nombre'),
-      descripcion: formData.get('descripcion'),
-      precio: parseFloat(formData.get('precio')),
-      categoria: formData.get('categoria'),
-      imagen: imagenProducto
-    };
+    const formElement = e.target;
+    const formData = new FormData(formElement);
+    
+    // Si la imagen está guardada en un estado, la agregamos al FormData en caso de que el input no la cargue directo
+    if (imagenProducto && !formData.get('imagen')) {
+      formData.append('imagen', imagenProducto);
+    }
 
     try {
       const respuesta = await fetch(`${API_BASE_URL}/productos`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datos)
+        // Nota importante: Al enviar FormData, NO incluyas 'Content-Type': 'application/json'. 
+        // El navegador asigna automáticamente el multipart/form-data correcto.
+        body: formData
       });
       
       const resultado = await respuesta.json();
       
       if (respuesta.ok) {
         alert('¡Producto guardado con éxito!');
-        e.target.reset();
+        formElement.reset();
         setImagenProducto('');
         setTipoCuenta('comprador');
       } else {
