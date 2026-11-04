@@ -163,7 +163,7 @@ export default function App() {
       setComercioActivo(datos);
       e.target.reset();
       setTipoCuenta('cargar_producto');
-    } 
+    
       } else {
         alert(`Error del servidor: ${resultado.message || JSON.stringify(resultado)}`);
       }
