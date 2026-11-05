@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import MembresiaPlanes from './MembresiaPlanes';
 const API_BASE_URL = 'https://mercado-once-backend-1.onrender.com/api';
 
 export default function App() {
@@ -593,6 +593,12 @@ if (Array.isArray(datoGuardado)) {
         Entrar al Panel
       </button>
     </form>
+  </div>
+)}
+{/* VISTA: Estado de Membresía y Planes del Comerciante */}
+{tipoCuenta === 'iniciar_sesion' && comercioActivo && (
+  <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
+    <MembresiaPlanes comerciante={comercioActivo} />
   </div>
 )}
         {/* VISTA: Cargar Producto */}
