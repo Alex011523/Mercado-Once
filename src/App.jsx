@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MembresiaPlanes from './MembresiaPlanes';
+import HomeMercado from './HomeMercado';
 const API_BASE_URL = 'https://mercado-once-backend-1.onrender.com/api';
 
 export default function App() {
@@ -85,7 +86,7 @@ export default function App() {
   const cargarMensajes = async () => {
     if (!emisorId || !receptorId) return;
     try {
-      const respuesta = await fetch(`${API_BASE_URL}/mensajes/${emisorId}/${receptorId}`);
+      const respuesta = await fetch(${API_BASE_URL}/mensajes/${emisorId}/${receptorId});
       const resultado = await respuesta.json();
       if (resultado.ok) {
         setMensajes(resultado.conversacion || []);
@@ -115,7 +116,7 @@ export default function App() {
     };
 
     try {
-      const respuesta = await fetch(`${API_BASE_URL}/mensajes`, {
+      const respuesta = await fetch(${API_BASE_URL}/mensajes, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos)
@@ -127,7 +128,7 @@ export default function App() {
         setTextoMensaje('');
         cargarMensajes();
       } else {
-        alert(`Error al enviar mensaje: ${resultado.error || 'Desconocido'}`);
+        alert(Error al enviar mensaje: ${resultado.error || 'Desconocido'});
       }
     } catch (error) {
       console.error('Error de red:', error);
@@ -147,30 +148,29 @@ export default function App() {
     };
 
     try {
-      const respuesta = await fetch(`${API_BASE_URL}/comerciantes`, {
+      const respuesta = await fetch(${API_BASE_URL}/comerciantes, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos)
       });
       const resultado = await respuesta.json();
-    if (respuesta.ok) {
-      const numeroSocio = resultado.id || resultado.comercio?.id || 1;
-      if (numeroSocio <= 50) {
-        alert(`¡Felicidades! Sos el miembro número #${numeroSocio} y tenés tus 60 días de membresía gratis.`);
+      if (respuesta.ok) {
+        const numeroSocio = resultado.id || resultado.comercio?.id || 1;
+        if (numeroSocio <= 50) {
+          alert(¡Felicidades! Sos el miembro número #${numeroSocio} y tenés tus 60 días de membresía gratis.);
+        } else {
+          alert('¡Registro de comerciante guardado con éxito!');
+        }
+        localStorage.setItem('comerciosMercadoOnce', JSON.stringify(datos));
+        setComercioActivo(datos);
+        e.target.reset();
+        setTipoCuenta('cargar_producto');
       } else {
-        alert('¡Registro de comerciante guardado con éxito!');
-      }
-      localStorage.setItem('comerciosMercadoOnce', JSON.stringify(datos));
-      setComercioActivo(datos);
-      e.target.reset();
-      setTipoCuenta('cargar_producto');
-    
-      } else {
-        alert(`Error del servidor: ${resultado.message || JSON.stringify(resultado)}`);
+        alert(Error del servidor: ${resultado.message || JSON.stringify(resultado)});
       }
     } catch (error) {
       console.error('Error de red:', error);
-      alert(`Error de conexión: ${error.message}`);
+      alert(Error de conexión: ${error.message});
     }
   };
 
@@ -184,7 +184,7 @@ export default function App() {
     };
 
     try {
-      const respuesta = await fetch(`${API_BASE_URL}/clientes`, {
+      const respuesta = await fetch(${API_BASE_URL}/clientes, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos)
@@ -192,7 +192,7 @@ export default function App() {
 
       if (!respuesta.ok) {
         const errorTexto = await respuesta.text();
-        alert(`Error del servidor (${respuesta.status}): ${errorTexto}`);
+        alert(Error del servidor (${respuesta.status}): ${errorTexto});
         return;
       }
 
@@ -200,24 +200,22 @@ export default function App() {
       e.target.reset();
     } catch (error) {
       console.error('Error de red:', error);
-      alert(`Error de conexión: ${error.message}`);
+      alert(Error de conexión: ${error.message});
     }
   };
-const handleSubmitProducto = async (e) => {
+
+  const handleSubmitProducto = async (e) => {
     e.preventDefault();
     const formElement = e.target;
     const formData = new FormData(formElement);
     
-    // Si la imagen está guardada en un estado, la agregamos al FormData en caso de que el input no la cargue directo
     if (imagenProducto && !formData.get('imagen')) {
       formData.append('imagen', imagenProducto);
     }
 
     try {
-      const respuesta = await fetch(`${API_BASE_URL}/productos`, {
+      const respuesta = await fetch(${API_BASE_URL}/productos, {
         method: 'POST',
-        // Nota importante: Al enviar FormData, NO incluyas 'Content-Type': 'application/json'. 
-        // El navegador asigna automáticamente el multipart/form-data correcto.
         body: formData
       });
       
@@ -229,7 +227,7 @@ const handleSubmitProducto = async (e) => {
         setImagenProducto('');
         setTipoCuenta('comprador');
       } else {
-        alert(`Error del servidor: ${resultado.error || 'No se pudo guardar'}`);
+        alert(Error del servidor: ${resultado.error || 'No se pudo guardar'});
       }
     } catch (error) {
       console.error('Error de red:', error);
@@ -238,26 +236,26 @@ const handleSubmitProducto = async (e) => {
   };
 
   return (
-    <div style={{ backgroundColor: '#070D18', color: '#F3F4F6', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
+    <div style={{ backgroundColor: '#090F20', color: '#F3F4F6', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
       
       {/* Cabecera Principal */}
       <header style={{ padding: '16px', backgroundColor: '#0B1320', borderBottom: '1px solid #1E293B', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h1 translate="no" style={{ margin: 0, fontSize: '20px', color: '#DDA36B', fontWeight: '800', letterSpacing: '0.5px' }}>
+          <h1 translate="no" style={{ margin: 0, fontSize: '20px', color: '#D49B6A', fontWeight: '800', letterSpacing: '0.5px' }}>
             MERCADO ONCE
           </h1>
           <p style={{ margin: '2px 0 0 0', fontSize: '11px', color: '#94A3B8' }}>Todo lo que buscas en un solo lugar</p>
         </div>
         <div style={{ display: 'flex', gap: '8px' }}>
           <button 
-            onClick={() => setTipoCuenta('favoritos')} 
-            style={{ backgroundColor: '#1E293B', border: '1px solid #334155', color: '#E8B882', padding: '6px 10px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer' }}
+            onClick={() => { setTipoCuenta('favoritos'); setProductoSeleccionado(null); }} 
+            style={{ backgroundColor: '#1E293B', border: '1px solid #334155', color: '#D49B6A', padding: '6px 10px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer' }}
           >
             ❤️ ({favoritos.length})
           </button>
           <button 
-            onClick={() => setTipoCuenta('carrito')} 
-            style={{ backgroundColor: '#C58547', border: 'none', color: '#070D18', padding: '6px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer' }}
+            onClick={() => { setTipoCuenta('carrito'); setProductoSeleccionado(null); }} 
+            style={{ backgroundColor: '#D49B6A', border: 'none', color: '#090F20', padding: '6px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer' }}
           >
             🛒 ({carrito.length})
           </button>
@@ -298,9 +296,9 @@ const handleSubmitProducto = async (e) => {
                 style={{
                   padding: '6px 14px',
                   borderRadius: '20px',
-                  border: categoriaSeleccionada === cat && tipoCuenta === 'comprador' ? '1px solid #C58547' : '1px solid #1E293B',
+                  border: categoriaSeleccionada === cat && tipoCuenta === 'comprador' ? '1px solid #D49B6A' : '1px solid #1E293B',
                   backgroundColor: categoriaSeleccionada === cat && tipoCuenta === 'comprador' ? '#1C2A44' : '#0B1320',
-                  color: categoriaSeleccionada === cat && tipoCuenta === 'comprador' ? '#E8B882' : '#94A3B8',
+                  color: categoriaSeleccionada === cat && tipoCuenta === 'comprador' ? '#D49B6A' : '#94A3B8',
                   fontSize: '12px',
                   whiteSpace: 'nowrap',
                   cursor: 'pointer',
@@ -313,177 +311,32 @@ const handleSubmitProducto = async (e) => {
           </div>
         </div>
 
-        {/* Pestañas de Navegación del Sistema */}
-        <div style={{ display: 'flex', marginBottom: '20px', backgroundColor: '#0B1320', borderRadius: '8px', border: '1px solid #1E293B', overflow: 'hidden' }}>
-          <button
-            type="button"
-            onClick={() => { setTipoCuenta('comprador'); setProductoSeleccionado(null); }}
-            style={{
-              flex: 1, padding: '12px 8px', background: 'none', border: 'none',
-              borderBottom: tipoCuenta === 'comprador' ? '3px solid #C58547' : '3px solid transparent',
-              color: tipoCuenta === 'comprador' ? '#E8B882' : '#94A3B8',
-              fontWeight: 'bold', fontSize: '12px', cursor: 'pointer'
-            }}
-          >
-            Catálogo
-          </button>
-          <button
-            type="button"
-            onClick={() => { setTipoCuenta('registro_cliente'); setProductoSeleccionado(null); }}
-            style={{
-              flex: 1, padding: '12px 8px', background: 'none', border: 'none',
-              borderBottom: tipoCuenta === 'registro_cliente' ? '3px solid #C58547' : '3px solid transparent',
-              color: tipoCuenta === 'registro_cliente' ? '#E8B882' : '#94A3B8',
-              fontWeight: 'bold', fontSize: '12px', cursor: 'pointer'
-            }}
-          >
-            Registro Cliente
-          </button>
-          <button
-            type="button"
-            onClick={() => { setTipoCuenta('comerciante'); setProductoSeleccionado(null); }}
-            style={{
-              flex: 1, padding: '12px 8px', background: 'none', border: 'none',
-              borderBottom: tipoCuenta === 'comerciante' ? '3px solid #C58547' : '3px solid transparent',
-              color: tipoCuenta === 'comerciante' ? '#E8B882' : '#94A3B8',
-              fontWeight: 'bold', fontSize: '12px', cursor: 'pointer'
-            }}
-          >
-            Registro Local
-          </button>
-          <button
-  type="button"
-  onClick={() => { setTipoCuenta('iniciar_sesion'); setProductoSeleccionado(null); }}
-  style={{
-    flex: 1, padding: '12px 8px', background: 'none', border: 'none',
-    borderBottom: tipoCuenta === 'iniciar_sesion' ? '3px solid #C58547' : '3px solid transparent',
-    color: tipoCuenta === 'iniciar_sesion' ? '#E8B882' : '#94A3B8',
-    fontWeight: 'bold', fontSize: '12px', cursor: 'pointer'
-  }}
->
-  Iniciar Sesión
-</button>
-         {comercioActivo && (
-    <>
-      <button
-        type="button"
-        onClick={() => { setTipoCuenta('cargar_producto'); setProductoSeleccionado(null); }}
-        style={{
-          flex: 1, padding: '12px 8px', background: 'none', border: 'none',
-          borderBottom: tipoCuenta === 'cargar_producto' ? '3px solid #C58547' : '3px solid transparent',
-          color: tipoCuenta === 'cargar_producto' ? '#E8B882' : '#94A3B8',
-          fontWeight: 'bold', fontSize: '12px', cursor: 'pointer'
-        }}
-      >
-        Cargar Producto
-      </button>
-
-      <button
-        type="button"
-        onClick={() => {
-          localStorage.removeItem('comercioMercadoOnce');
-          setComercioActivo(null);
-          setTipoCuenta('comprador');
-          alert('Has cerrado sesión correctamente.');
-        }}
-        style={{
-          padding: '6px 10px', background: '#334155', border: 'none',
-          color: '#F3F4F6', borderRadius: '6px', fontSize: '11px', fontWeight: 'bold', cursor: 'pointer', margin: 'auto 6px'
-        }}
-      >
-        Cerrar Sesión
-      </button>
-    </>
-  )}
-          <button
-            type="button"
-            onClick={() => { setTipoCuenta('mensajes'); setProductoSeleccionado(null); }}
-            style={{
-              flex: 1, padding: '12px 8px', background: 'none', border: 'none',
-              borderBottom: tipoCuenta === 'mensajes' ? '3px solid #C58547' : '3px solid transparent',
-              color: tipoCuenta === 'mensajes' ? '#E8B882' : '#94A3B8',
-              fontWeight: 'bold', fontSize: '12px', cursor: 'pointer'
-            }}
-          >
-            Chat Directo
-          </button>
-        </div>
-
-        {/* VISTA 1: Catálogo de Productos y Filtros */}
+        {/* VISTA 1: Catálogo integrado con HomeMercado */}
         {tipoCuenta === 'comprador' && !productoSeleccionado && (
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-              <span style={{ fontSize: '13px', color: '#94A3B8' }}>
-                Resultados ({productosFiltrados.length})
-              </span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <label style={{ fontSize: '11px', color: '#94A3B8' }}>Precio:</label>
-                <select
-                  value={ordenPrecio}
-                  onChange={(e) => setOrdenPrecio(e.target.value)}
-                  style={{
-                    backgroundColor: '#0B1320',
-                    color: '#E8B882',
-                    border: '1px solid #334155',
-                    borderRadius: '6px',
-                    padding: '4px 8px',
-                    fontSize: '12px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <option value="menor">Menor a Mayor</option>
-                  <option value="mayor">Mayor a Menor</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Grilla de productos */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }}>
-              {productosFiltrados.map((prod) => {
-                const esFavorito = favoritos.some(f => f.id === prod.id);
-                return (
-                  <div
-                    key={prod.id}
-                    onClick={() => setProductoSeleccionado(prod)}
-                    style={{
-                      backgroundColor: '#0B1320',
-                      borderRadius: '10px',
-                      border: '1px solid #1E293B',
-                      overflow: 'hidden',
-                      cursor: 'pointer',
-                      position: 'relative',
-                      transition: 'border-color 0.2s'
-                    }}
-                  >
-                    <button
-                      onClick={(e) => toggleFavorito(prod, e)}
-                      style={{
-                        position: 'absolute', top: '8px', right: '8px',
-                        backgroundColor: 'rgba(7, 13, 24, 0.8)', border: 'none',
-                        borderRadius: '50%', width: '30px', height: '30px',
-                        cursor: 'pointer', fontSize: '14px', zIndex: 2
-                      }}
-                    >
-                      {esFavorito ? '❤️' : '🤍'}
-                    </button>
-                    <img src={prod.imagen} alt={prod.nombre} style={{ width: '100%', height: '140px', objectFit: 'cover' }} />
-                    <div style={{ padding: '12px' }}>
-                      <span style={{ fontSize: '10px', color: '#C58547', fontWeight: 'bold', textTransform: 'uppercase' }}>
-                        {prod.categoria}
-                      </span>
-                      <h4 style={{ margin: '4px 0 6px 0', fontSize: '13px', color: '#F3F4F6', height: '36px', overflow: 'hidden' }}>
-                        {prod.nombre}
-                      </h4>
-                      <p style={{ margin: '0 0 6px 0', fontSize: '16px', fontWeight: 'bold', color: '#E8B882' }}>
-                        ${prod.precio.toLocaleString('es-AR')}
-                      </p>
-                      <p style={{ margin: 0, fontSize: '11px', color: '#94A3B8' }}>
-                        📍 {prod.comercio}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
+            <HomeMercado 
+              productos={productosFiltrados} 
+              onSelectProducto={(prod) => setProductoSeleccionado(prod)} 
+            />
+            
+            {/* Selector de orden de precio */}
+            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '14px', marginBottom: '14px', padding: '0 16px' }}>
+              <select
+                value={ordenPrecio}
+                onChange={(e) => setOrdenPrecio(e.target.value)}
+                style={{
+                  backgroundColor: '#0B1320',
+                  color: '#D49B6A',
+                  border: '1px solid #334155',
+                  borderRadius: '6px',
+                  padding: '6px 10px',
+                  fontSize: '12px',
+                  cursor: 'pointer'
+                }}
+              >
+                <option value="menor">Menor a Mayor</option>
+                <option value="mayor">Mayor a Menor</option>
+              </select>
             </div>
           </div>
         )}
@@ -493,17 +346,17 @@ const handleSubmitProducto = async (e) => {
           <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
             <button
               onClick={() => setProductoSeleccionado(null)}
-              style={{ backgroundColor: '#1E293B', color: '#E8B882', border: 'none', padding: '6px 12px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer', marginBottom: '14px' }}
+              style={{ backgroundColor: '#1E293B', color: '#D49B6A', border: 'none', padding: '6px 12px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer', marginBottom: '14px' }}
             >
               ← Volver al catálogo
             </button>
             <img src={productoSeleccionado.imagen} alt={productoSeleccionado.nombre} style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '8px', marginBottom: '14px' }} />
-            <span style={{ fontSize: '11px', color: '#C58547', fontWeight: 'bold', textTransform: 'uppercase' }}>{productoSeleccionado.categoria}</span>
+            <span style={{ fontSize: '11px', color: '#D49B6A', fontWeight: 'bold', textTransform: 'uppercase' }}>{productoSeleccionado.categoria}</span>
             <h2 style={{ margin: '6px 0', fontSize: '18px', color: '#F3F4F6' }}>{productoSeleccionado.nombre}</h2>
-            <p style={{ margin: '0 0 12px 0', fontSize: '22px', fontWeight: 'bold', color: '#E8B882' }}>${productoSeleccionado.precio.toLocaleString('es-AR')}</p>
+            <p style={{ margin: '0 0 12px 0', fontSize: '22px', fontWeight: 'bold', color: '#D49B6A' }}>${productoSeleccionado.precio.toLocaleString('es-AR')}</p>
             <p style={{ fontSize: '13px', color: '#94A3B8', marginBottom: '16px', lineHeight: '1.4' }}>{productoSeleccionado.descripcion}</p>
             
-            <div style={{ backgroundColor: '#070D18', padding: '12px', borderRadius: '8px', border: '1px solid #1E293B', marginBottom: '16px' }}>
+            <div style={{ backgroundColor: '#090F20', padding: '12px', borderRadius: '8px', border: '1px solid #1E293B', marginBottom: '16px' }}>
               <p style={{ margin: '0 0 4px 0', fontSize: '13px', fontWeight: 'bold', color: '#F3F4F6' }}>🏪 Vendido por: {productoSeleccionado.comercio}</p>
               <p style={{ margin: 0, fontSize: '11px', color: '#94A3B8' }}>📍 Dirección en Once: {productoSeleccionado.direccion}</p>
             </div>
@@ -511,7 +364,7 @@ const handleSubmitProducto = async (e) => {
             <div style={{ display: 'flex', gap: '10px' }}>
               <button
                 onClick={() => agregarAlCarrito(productoSeleccionado)}
-                style={{ flex: 1, backgroundColor: '#1E293B', color: '#E8B882', border: '1px solid #334155', padding: '12px', borderRadius: '6px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer' }}
+                style={{ flex: 1, backgroundColor: '#1E293B', color: '#D49B6A', border: '1px solid #334155', padding: '12px', borderRadius: '6px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer' }}
               >
                 🛒 Añadir al Carrito
               </button>
@@ -520,7 +373,7 @@ const handleSubmitProducto = async (e) => {
                   setTipoCuenta('mensajes');
                   setProductoSeleccionado(null);
                 }}
-                style={{ flex: 1, backgroundColor: '#C58547', color: '#070D18', border: 'none', padding: '12px', borderRadius: '6px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer' }}
+                style={{ flex: 1, backgroundColor: '#D49B6A', color: '#090F20', border: 'none', padding: '12px', borderRadius: '6px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer' }}
               >
                 💬 Contactar Local
               </button>
@@ -531,12 +384,12 @@ const handleSubmitProducto = async (e) => {
         {/* VISTA 2: Registro de Cliente */}
         {tipoCuenta === 'registro_cliente' && (
           <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
-            <h3 style={{ margin: '0 0 16px 0', textAlign: 'center', color: '#E8B882' }}>Registro de Cliente</h3>
+            <h3 style={{ margin: '0 0 16px 0', textAlign: 'center', color: '#D49B6A' }}>Registro de Cliente</h3>
             <form onSubmit={handleSubmitCliente} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <input type="text" name="nombre" placeholder="Nombre completo" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white' }} />
-              <input type="email" name="email" placeholder="Correo electrónico" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white' }} />
-              <input type="password" name="password" placeholder="Contraseña" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white' }} />
-              <button type="submit" style={{ backgroundColor: '#C58547', color: '#070D18', border: 'none', padding: '12px', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer', marginTop: '10px' }}>Registrarse</button>
+              <input type="text" name="nombre" placeholder="Nombre completo" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#090F20', color: 'white' }} />
+              <input type="email" name="email" placeholder="Correo electrónico" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#090F20', color: 'white' }} />
+              <input type="password" name="password" placeholder="Contraseña" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#090F20', color: 'white' }} />
+              <button type="submit" style={{ backgroundColor: '#D49B6A', color: '#090F20', border: 'none', padding: '12px', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer', marginTop: '10px' }}>Registrarse</button>
             </form>
           </div>
         )}
@@ -544,146 +397,150 @@ const handleSubmitProducto = async (e) => {
         {/* VISTA 3: Registro de Comerciante */}
         {tipoCuenta === 'comerciante' && (
           <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
-            <h3 style={{ margin: '0 0 16px 0', textAlign: 'center', color: '#E8B882' }}>Registro de Local / Comerciante</h3>
+            <h3 style={{ margin: '0 0 16px 0', textAlign: 'center', color: '#D49B6A' }}>Registro de Local / Comerciante</h3>
             <form onSubmit={handleSubmitComerciante} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <input type="text" name="nombre" placeholder="Nombre del Local / Comercio" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white' }} />
-              <input type="text" name="direccion" placeholder="Dirección en Once (ej: Paso 210)" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white' }} />
-              <input type="text" name="whatsapp" placeholder="WhatsApp de contacto" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white' }} />
-              <input type="text" name="cuit" placeholder="CUIT / Identificación Comercial" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white' }} />
-              <button type="submit" style={{ backgroundColor: '#C58547', color: '#070D18', border: 'none', padding: '12px', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer', marginTop: '10px' }}>Registrar Comercio</button>
+              <input type="text" name="nombre" placeholder="Nombre del Local / Comercio" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#090F20', color: 'white' }} />
+              <input type="text" name="direccion" placeholder="Dirección en Once (ej: Paso 210)" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#090F20', color: 'white' }} />
+              <input type="text" name="whatsapp" placeholder="WhatsApp de contacto" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#090F20', color: 'white' }} />
+              <input type="text" name="cuit" placeholder="CUIT / Identificación Comercial" required style={{ padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#090F20', color: 'white' }} />
+              <button type="submit" style={{ backgroundColor: '#D49B6A', color: '#090F20', border: 'none', padding: '12px', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer', marginTop: '10px' }}>Registrar Comercio</button>
             </form>
           </div>
         )}
-        {/* VISTA: Iniciar Sesión de Comerciante */}
-{tipoCuenta === 'iniciar_sesion' && (
-  <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
-    <h3 style={{ margin: '0 0 16px 0', textAlign: 'center', color: '#E8B882' }}>Iniciar Sesión / Comerciante</h3>
-    <form onSubmit={(e) => {
-      e.preventDefault();
-      const cuitIngresado = e.target.cuitLogin.value.trim();
-      
-     const datoGuardado = JSON.parse(localStorage.getItem('comerciosMercadoOnce'));
-let comercioEncontrado = null;
 
-if (Array.isArray(datoGuardado)) {
-  comercioEncontrado = datoGuardado.find(c => c.cuit === cuitIngresado);
-} else if (datoGuardado && datoGuardado.cuit === cuitIngresado) {
-  comercioEncontrado = datoGuardado;
-}
-      if (comercioEncontrado) {
-        setComercioActivo(comercioEncontrado);
-        localStorage.setItem('comercioMercadoOnce', JSON.stringify(comercioEncontrado));
-        alert(`Bienvenido de nuevo, ${comercioEncontrado.nombre}!`);
-        setTipoCuenta('cargar_producto');
-      } else {
-        alert('No se encontró ningún comercio registrado con ese CUIT. Verifica los datos o regístrate.');
-      }
-    }} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-      <input 
-        type="text" 
-        name="cuitLogin" 
-        placeholder="CUIT / Identificación Comercial" 
-        required 
-        style={{ padding: '10px', borderRadius: '8px', border: '1px solid #1E293B', background: '#0F172A', color: '#FFF' }}
-      />
-      <button 
-        type="submit" 
-        style={{ backgroundColor: '#C58547', color: '#070D18', border: 'none', padding: '12px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer' }}
-      >
-        Entrar al Panel
-      </button>
-    </form>
-  </div>
-)}
-{/* VISTA: Estado de Membresía y Planes del Comerciante */}
-{tipoCuenta === 'iniciar_sesion' && comercioActivo && (
-  <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
-    <MembresiaPlanes comerciante={comercioActivo} />
-  </div>
-)}
+        {/* VISTA: Iniciar Sesión de Comerciante */}
+        {tipoCuenta === 'iniciar_sesion' && !comercioActivo && (
+          <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
+            <h3 style={{ margin: '0 0 16px 0', textAlign: 'center', color: '#D49B6A' }}>Iniciar Sesión / Comerciante</h3>
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              const cuitIngresado = e.target.cuitLogin.value.trim();
+              
+              const datoGuardado = JSON.parse(localStorage.getItem('comerciosMercadoOnce'));
+              let comercioEncontrado = null;
+
+              if (Array.isArray(datoGuardado)) {
+                comercioEncontrado = datoGuardado.find(c => c.cuit === cuitIngresado);
+              } else if (datoGuardado && datoGuardado.cuit === cuitIngresado) {
+                comercioEncontrado = datoGuardado;
+              }
+
+              if (comercioEncontrado) {
+                setComercioActivo(comercioEncontrado);
+                localStorage.setItem('comercioMercadoOnce', JSON.stringify(comercioEncontrado));
+                alert(Bienvenido de nuevo, ${comercioEncontrado.nombre}!);
+                setTipoCuenta('cargar_producto');
+              } else {
+                alert('No se encontró ningún comercio registrado con ese CUIT. Verifica los datos o regístrate.');
+              }
+            }} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <input 
+                type="text" 
+                name="cuitLogin" 
+                placeholder="CUIT / Identificación Comercial" 
+                required 
+                style={{ padding: '10px', borderRadius: '8px', border: '1px solid #1E293B', background: '#090F20', color: '#FFF' }}
+              />
+              <button 
+                type="submit" 
+                style={{ backgroundColor: '#D49B6A', color: '#090F20', border: 'none', padding: '12px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer' }}
+              >
+                Entrar al Panel
+              </button>
+            </form>
+          </div>
+        )}
+
+        {/* VISTA: Estado de Membresía y Planes del Comerciante */}
+        {tipoCuenta === 'iniciar_sesion' && comercioActivo && (
+          <div style={{ padding: '0', maxWidth: '800px', margin: '0 auto' }}>
+            <MembresiaPlanes comerciante={comercioActivo} />
+          </div>
+        )}
+
         {/* VISTA: Cargar Producto */}
-{tipoCuenta === 'cargar_producto' && (
-  <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
-    <h3 style={{ margin: '0 0 16px 0', textAlign: 'center', color: '#E8B882' }}>Cargar Nuevo Producto</h3>
-    <form onSubmit={handleSubmitProducto} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-      <input type="text" name="nombre" placeholder="Nombre del producto" required style={{ padding: '10px', borderRadius: '8px', border: '1px solid #334155', backgroundColor: '#0F172A', color: '#FFF' }} />
-      <input type="text" name="descripcion" placeholder="Descripción breve" required style={{ padding: '10px', borderRadius: '8px', border: '1px solid #334155', backgroundColor: '#0F172A', color: '#FFF' }} />
-      <input type="number" name="precio" placeholder="Precio en pesos" required style={{ padding: '10px', borderRadius: '8px', border: '1px solid #334155', backgroundColor: '#0F172A', color: '#FFF' }} />
-      <select name="categoria" required style={{ padding: '10px', borderRadius: '8px', border: '1px solid #334155', backgroundColor: '#0F172A', color: '#FFF' }}>
-        <option value="">Selecciona una categoría</option>
-        <option value="Indumentaria">Indumentaria</option>
-        <option value="Marroquinería">Marroquinería</option>
-        <option value="Tecnología">Tecnología</option>
-        <option value="Hogar y Bazar">Hogar y Bazar</option>
-      </select>
-      <div style={{ marginBottom: '10px' }}>
-  <label style={{ display: 'block', color: '#94A3B8', fontSize: '12px', marginBottom: '6px' }}>
-    Imagen del producto (Subir archivo)
-  </label>
-  <input 
-    type="file" 
-    accept="image/*"
-    onChange={(e) => {
-      const archivo = e.target.files[0];
-      if (archivo) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setImagenProducto(reader.result);
-        };
-        reader.readAsDataURL(archivo);
-      }
-    }}
-    style={{
-      width: '100%',
-      padding: '8px',
-      borderRadius: '8px',
-      border: '1px solid #334155',
-      backgroundColor: '#0F172A',
-      color: '#FFF',
-      fontSize: '13px',
-      cursor: 'pointer',
-      boxSizing: 'border-box'
-    }} 
-  />
-  {imagenProducto && (
-    <div style={{ marginTop: '8px', textAlign: 'center' }}>
-      <img 
-        src={imagenProducto} 
-        alt="Vista previa" 
-        style={{ maxHeight: '100px', borderRadius: '6px', border: '1px solid #334155' }} 
-      />
-    </div>
-  )}
-</div>
-      <button type="submit" style={{ backgroundColor: '#C58547', color: '#070D18', border: 'none', padding: '12px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer' }}>Guardar y Publicar Producto</button>
-    </form>
-  </div>
-)}
+        {tipoCuenta === 'cargar_producto' && (
+          <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
+            <h3 style={{ margin: '0 0 16px 0', textAlign: 'center', color: '#D49B6A' }}>Cargar Nuevo Producto</h3>
+            <form onSubmit={handleSubmitProducto} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <input type="text" name="nombre" placeholder="Nombre del producto" required style={{ padding: '10px', borderRadius: '8px', border: '1px solid #334155', backgroundColor: '#090F20', color: '#FFF' }} />
+              <input type="text" name="descripcion" placeholder="Descripción breve" required style={{ padding: '10px', borderRadius: '8px', border: '1px solid #334155', backgroundColor: '#090F20', color: '#FFF' }} />
+              <input type="number" name="precio" placeholder="Precio en pesos" required style={{ padding: '10px', borderRadius: '8px', border: '1px solid #334155', backgroundColor: '#090F20', color: '#FFF' }} />
+              <select name="categoria" required style={{ padding: '10px', borderRadius: '8px', border: '1px solid #334155', backgroundColor: '#090F20', color: '#FFF' }}>
+                <option value="">Selecciona una categoría</option>
+                <option value="Indumentaria">Indumentaria</option>
+                <option value="Marroquinería">Marroquinería</option>
+                <option value="Tecnología">Tecnología</option>
+                <option value="Hogar y Bazar">Hogar y Bazar</option>
+              </select>
+              <div style={{ marginBottom: '10px' }}>
+                <label style={{ display: 'block', color: '#94A3B8', fontSize: '12px', marginBottom: '6px' }}>
+                  Imagen del producto (Subir archivo)
+                </label>
+                <input 
+                  type="file" 
+                  accept="image/*"
+                  onChange={(e) => {
+                    const archivo = e.target.files[0];
+                    if (archivo) {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        setImagenProducto(reader.result);
+                      };
+                      reader.readAsDataURL(archivo);
+                    }
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: '8px',
+                    borderRadius: '8px',
+                    border: '1px solid #334155',
+                    backgroundColor: '#090F20',
+                    color: '#FFF',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    boxSizing: 'border-box'
+                  }} 
+                />
+                {imagenProducto && (
+                  <div style={{ marginTop: '8px', textAlign: 'center' }}>
+                    <img 
+                      src={imagenProducto} 
+                      alt="Vista previa" 
+                      style={{ maxHeight: '100px', borderRadius: '6px', border: '1px solid #334155' }} 
+                    />
+                  </div>
+                )}
+              </div>
+              <button type="submit" style={{ backgroundColor: '#D49B6A', color: '#090F20', border: 'none', padding: '12px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer' }}>Guardar y Publicar Producto</button>
+            </form>
+          </div>
+        )}
 
         {/* VISTA 4: Mensajería / Chat Directo */}
         {tipoCuenta === 'mensajes' && (
           <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
-            <h3 style={{ margin: '0 0 10px 0', textAlign: 'center', color: '#E8B882' }}>Negociación Directa</h3>
+            <h3 style={{ margin: '0 0 10px 0', textAlign: 'center', color: '#D49B6A' }}>Negociación Directa</h3>
             <p style={{ margin: '0 0 16px 0', fontSize: '12px', color: '#94A3B8', textAlign: 'center' }}>Coordiná stock y entregas directamente con el comerciante.</p>
             
             <div style={{ display: 'flex', gap: '10px', marginBottom: '14px' }}>
               <div style={{ flex: 1 }}>
                 <label style={{ fontSize: '10px', color: '#94A3B8' }}>ID Emisor:</label>
-                <input type="text" value={emisorId} onChange={(e) => setEmisorId(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white', boxSizing: 'border-box' }} />
+                <input type="text" value={emisorId} onChange={(e) => setEmisorId(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', border: '1px solid #334155', backgroundColor: '#090F20', color: 'white', boxSizing: 'border-box' }} />
               </div>
               <div style={{ flex: 1 }}>
                 <label style={{ fontSize: '10px', color: '#94A3B8' }}>ID Receptor:</label>
-                <input type="text" value={receptorId} onChange={(e) => setReceptorId(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white', boxSizing: 'border-box' }} />
+                <input type="text" value={receptorId} onChange={(e) => setReceptorId(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', border: '1px solid #334155', backgroundColor: '#090F20', color: 'white', boxSizing: 'border-box' }} />
               </div>
-              <button onClick={cargarMensajes} style={{ alignSelf: 'flex-end', backgroundColor: '#1E293B', color: '#E8B882', border: '1px solid #334155', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}>Actualizar</button>
+              <button onClick={cargarMensajes} style={{ alignSelf: 'flex-end', backgroundColor: '#1E293B', color: '#D49B6A', border: '1px solid #334155', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}>Actualizar</button>
             </div>
 
-            <div style={{ minHeight: '200px', maxHeight: '300px', overflowY: 'auto', backgroundColor: '#070D18', padding: '12px', borderRadius: '8px', border: '1px solid #1E293B', marginBottom: '14px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div style={{ minHeight: '200px', maxHeight: '300px', overflowY: 'auto', backgroundColor: '#090F20', padding: '12px', borderRadius: '8px', border: '1px solid #1E293B', marginBottom: '14px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {mensajes.length === 0 ? (
                 <p style={{ textAlign: 'center', color: '#64748B', fontSize: '12px', marginTop: '80px' }}>No hay mensajes en esta conversación.</p>
               ) : (
                 mensajes.map((msg, index) => (
-                  <div key={index} style={{ alignSelf: String(msg.emisor_id) === String(emisorId) ? 'flex-end' : 'flex-start', backgroundColor: String(msg.emisor_id) === String(emisorId) ? '#1C2A44' : '#1E293B', color: String(msg.emisor_id) === String(emisorId) ? '#E8B882' : '#F3F4F6', padding: '8px 12px', borderRadius: '8px', maxWidth: '80%', fontSize: '13px' }}>
+                  <div key={index} style={{ alignSelf: String(msg.emisor_id) === String(emisorId) ? 'flex-end' : 'flex-start', backgroundColor: String(msg.emisor_id) === String(emisorId) ? '#1C2A44' : '#1E293B', color: String(msg.emisor_id) === String(emisorId) ? '#D49B6A' : '#F3F4F6', padding: '8px 12px', borderRadius: '8px', maxWidth: '80%', fontSize: '13px' }}>
                     <p style={{ margin: 0 }}>{msg.texto}</p>
                   </div>
                 ))
@@ -691,8 +548,8 @@ if (Array.isArray(datoGuardado)) {
             </div>
 
             <form onSubmit={handleEnviarMensaje} style={{ display: 'flex', gap: '8px' }}>
-              <input type="text" value={textoMensaje} onChange={(e) => setTextoMensaje(e.target.value)} placeholder="Escribí tu consulta al comerciante..." style={{ flex: 1, padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#070D18', color: 'white' }} />
-              <button type="submit" style={{ backgroundColor: '#C58547', color: '#070D18', border: 'none', padding: '10px 16px', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' }}>Enviar</button>
+              <input type="text" value={textoMensaje} onChange={(e) => setTextoMensaje(e.target.value)} placeholder="Escribí tu consulta al comerciante..." style={{ flex: 1, padding: '10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#090F20', color: 'white' }} />
+              <button type="submit" style={{ backgroundColor: '#D49B6A', color: '#090F20', border: 'none', padding: '10px 16px', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' }}>Enviar</button>
             </form>
           </div>
         )}
@@ -700,7 +557,7 @@ if (Array.isArray(datoGuardado)) {
         {/* VISTA 5: Carrito */}
         {tipoCuenta === 'carrito' && (
           <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
-            <h3 style={{ margin: '0 0 16px 0', color: '#E8B882' }}>Tu Carrito de Compras</h3>
+            <h3 style={{ margin: '0 0 16px 0', color: '#D49B6A' }}>Tu Carrito de Compras</h3>
             {carrito.length === 0 ? (
               <p style={{ color: '#94A3B8', fontSize: '13px' }}>El carrito está vacío.</p>
             ) : (
@@ -709,7 +566,7 @@ if (Array.isArray(datoGuardado)) {
                   <div key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid #1E293B' }}>
                     <div>
                       <p style={{ margin: 0, fontWeight: 'bold', fontSize: '13px' }}>{item.nombre}</p>
-                      <p style={{ margin: 0, color: '#C58547', fontSize: '12px' }}>${item.precio.toLocaleString('es-AR')}</p>
+                      <p style={{ margin: 0, color: '#D49B6A', fontSize: '12px' }}>${item.precio.toLocaleString('es-AR')}</p>
                     </div>
                     <button onClick={() => eliminarDelCarrito(index)} style={{ backgroundColor: '#7F1D1D', color: 'white', border: 'none', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px' }}>Eliminar</button>
                   </div>
@@ -722,94 +579,152 @@ if (Array.isArray(datoGuardado)) {
         {/* VISTA 6: Favoritos */}
         {tipoCuenta === 'favoritos' && (
           <div style={{ backgroundColor: '#0B1320', padding: '20px', borderRadius: '12px', border: '1px solid #1E293B' }}>
-            <h3 style={{ margin: '0 0 16px 0', color: '#E8B882' }}>Tus Favoritos</h3>
+            <h3 style={{ margin: '0 0 16px 0', color: '#D49B6A' }}>Tus Favoritos</h3>
             {favoritos.length === 0 ? (
               <p style={{ color: '#94A3B8', fontSize: '13px' }}>No agregaste productos a favoritos aún.</p>
             ) : (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '10px' }}>
                 {favoritos.map((prod) => (
-                  <div key={prod.id} style={{ backgroundColor: '#070D18', padding: '10px', borderRadius: '8px', border: '1px solid #1E293B' }}>
+                  <div key={prod.id} style={{ backgroundColor: '#090F20', padding: '10px', borderRadius: '8px', border: '1px solid #1E293B' }}>
                     <p style={{ margin: '0 0 4px 0', fontSize: '12px', fontWeight: 'bold' }}>{prod.nombre}</p>
-                    <p style={{ margin: 0, color: '#E8B882', fontSize: '12px' }}>${prod.precio.toLocaleString('es-AR')}</p>
+                    <p style={{ margin: 0, color: '#D49B6A', fontSize: '12px' }}>${prod.precio.toLocaleString('es-AR')}</p>
                   </div>
                 ))}
               </div>
             )}
           </div>
         )}
-      {/* Botón flotante para generar el QR */}
-      <button 
-        onClick={() => setMostrarQR(true)}
-        style={{
-          position: 'fixed',
-          bottom: '20px',
-          right: '20px',
-          backgroundColor: '#25D366',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '50px',
-          padding: '10px 20px',
-          cursor: 'pointer',
-          boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-          zIndex: 1000,
-          fontWeight: 'bold'
-        }}
-      >
-        📱 Mostrar QR de Acceso
-      </button>
 
-      {/* Modal del Código QR */}
-      {mostrarQR && (
-        <div style={{
+        {/* Barra de Navegación Inferior Estilo App Móvil (Para alternar secciones limpiamente) */}
+        <nav style={{
           position: 'fixed',
-          top: 0,
+          bottom: 0,
           left: 0,
-          width: '100%',
-          height: '100%',
-          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+          right: 0,
+          backgroundColor: '#0B1320',
+          borderTop: '1px solid #1E293B',
           display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          zIndex: 1100
+          justifyContent: 'space-around',
+          padding: '10px 0',
+          zIndex: 900
         }}>
+          <button 
+            onClick={() => { setTipoCuenta('comprador'); setProductoSeleccionado(null); }}
+            style={{ background: 'none', border: 'none', color: tipoCuenta === 'comprador' ? '#D49B6A' : '#94A3B8', fontSize: '11px', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}
+          >
+            <span>🏠</span>
+            <span>Inicio</span>
+          </button>
+          
+          <button 
+            onClick={() => { setTipoCuenta('registro_cliente'); setProductoSeleccionado(null); }}
+            style={{ background: 'none', border: 'none', color: tipoCuenta === 'registro_cliente' ? '#D49B6A' : '#94A3B8', fontSize: '11px', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}
+          >
+            <span>👤</span>
+            <span>Cliente</span>
+          </button>
+
+          <button 
+            onClick={() => { setTipoCuenta('comerciante'); setProductoSeleccionado(null); }}
+            style={{ background: 'none', border: 'none', color: tipoCuenta === 'comerciante' ? '#D49B6A' : '#94A3B8', fontSize: '11px', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}
+          >
+            <span>🏪</span>
+            <span>Local</span>
+          </button>
+
+          <button 
+            onClick={() => { setTipoCuenta('iniciar_sesion'); setProductoSeleccionado(null); }}
+            style={{ background: 'none', border: 'none', color: tipoCuenta === 'iniciar_sesion' ? '#D49B6A' : '#94A3B8', fontSize: '11px', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}
+          >
+            <span>🔑</span>
+            <span>{comercioActivo ? 'Panel' : 'Acceso'}</span>
+          </button>
+
+          <button 
+            onClick={() => { setTipoCuenta('mensajes'); setProductoSeleccionado(null); }}
+            style={{ background: 'none', border: 'none', color: tipoCuenta === 'mensajes' ? '#D49B6A' : '#94A3B8', fontSize: '11px', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}
+          >
+            <span>💬</span>
+            <span>Chat</span>
+          </button>
+        </nav>
+
+        {/* Botón flotante para generar el QR */}
+        <button 
+          onClick={() => setMostrarQR(true)}
+          style={{
+            position: 'fixed',
+            bottom: '70px',
+            right: '20px',
+            backgroundColor: '#25D366',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '50px',
+            padding: '8px 16px',
+            cursor: 'pointer',
+            boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
+            zIndex: 1000,
+            fontSize: '12px',
+            fontWeight: 'bold'
+          }}
+        >
+          📱 QR
+        </button>
+
+        {/* Modal del Código QR */}
+        {mostrarQR && (
           <div style={{
-            backgroundColor: '#fff',
-            padding: '25px',
-            borderRadius: '12px',
-            textAlign: 'center',
-            maxWidth: '320px',
-            boxShadow: '0 5px 15px rgba(0,0,0,0.3)'
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 1100
           }}>
-            <h3 style={{ margin: '0 0 10px 0', color: '#333' }}>¡Escaneá para ingresar!</h3>
-            <p style={{ fontSize: '14px', color: '#666', marginBottom: '15px' }}>
-              Abre la cámara de tu celular para entrar a Mercado Once.
-            </p>
-            
-            <img 
-              src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://mercado-once.vercel.app" 
-              alt="Código QR Mercado Once" 
-              style={{ border: '3px solid #eee', borderRadius: '8px', marginBottom: '15px' }}
-            />
-            
-            <br />
-            
-            <button 
-              onClick={() => setMostrarQR(false)}
-              style={{
-                backgroundColor: '#ff4d4d',
-                color: '#fff',
-                border: 'none',
-                padding: '8px 20px',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontWeight: 'bold'
-              }}
-            >
-              Cerrar
-</button>
+            <div style={{
+              backgroundColor: '#0B1320',
+              border: '1px solid #1E293B',
+              padding: '25px',
+              borderRadius: '12px',
+              textAlign: 'center',
+              maxWidth: '320px',
+              boxShadow: '0 5px 15px rgba(0,0,0,0.5)'
+            }}>
+              <h3 style={{ margin: '0 0 10px 0', color: '#D49B6A' }}>¡Escaneá para ingresar!</h3>
+              <p style={{ fontSize: '13px', color: '#94A3B8', marginBottom: '15px' }}>
+                Abre la cámara de tu celular para entrar a Mercado Once.
+              </p>
+              
+              <img 
+                src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://mercado-once.vercel.app" 
+                alt="Código QR Mercado Once" 
+                style={{ border: '3px solid #1E293B', borderRadius: '8px', marginBottom: '15px', backgroundColor: '#fff', padding: '6px' }}
+              />
+              
+              <br />
+              
+              <button 
+                onClick={() => setMostrarQR(false)}
+                style={{
+                  backgroundColor: '#7F1D1D',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '8px 20px',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  fontSize: '13px'
+                }}
+              >
+                Cerrar
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
       </main>
     </div>
