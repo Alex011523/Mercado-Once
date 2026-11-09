@@ -157,7 +157,7 @@ export default function App() {
       if (respuesta.ok) {
         const numeroSocio = resultado.id || resultado.comercio?.id || 1;
         if (numeroSocio <= 50) {
-          alert(¡Felicidades! Sos el miembro número #${numeroSocio} y tenés tus 60 días de membresía gratis.);
+          alert(`¡Felicidades! Sos el miembro número #${numeroSocio} y tenés tus 60 días de membresía gratis.`);
         } else {
           alert('¡Registro de comerciante guardado con éxito!');
         }
