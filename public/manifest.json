@@ -4,26 +4,26 @@
   "name": "Mercado Once - Todo lo que buscas en un solo lugar",
   "icons": [
     {
-      "src": "/Splash-mo.png.jpeg",
-      "type": "image/jpeg",
+      "src": "/icon-mo-round.png",
+      "type": "image/png",
       "sizes": "192x192",
       "purpose": "any"
     },
     {
-      "src": "/Splash-mo.png.jpeg",
-      "type": "image/jpeg",
+      "src": "/icon-mo-round.png",
+      "type": "image/png",
       "sizes": "192x192",
       "purpose": "maskable"
     },
     {
-      "src": "/Splash-mo.png.jpeg",
-      "type": "image/jpeg",
+      "src": "/icon-mo-round.png",
+      "type": "image/png",
       "sizes": "512x512",
       "purpose": "any"
     },
     {
-      "src": "/Splash-mo.png.jpeg",
-      "type": "image/jpeg",
+      "src": "/icon-mo-round.png",
+      "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"
     }
