@@ -274,25 +274,28 @@ export default function App() {
 
       <main style={{ padding: '16px', paddingBottom: '90px', maxWidth: '650px', margin: '0 auto' }}>
         
-        {/* Barra de Búsqueda General */}
-        <div style={{ marginBottom: '16px' }}>
-          <input
-            type="text"
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-            placeholder="Buscar productos o comercios en Once..."
-            style={{
-              width: '100%',
-              padding: '12px 16px',
-              borderRadius: '8px',
-              border: '1px solid #334155',
-              backgroundColor: '#0B1320',
-              color: 'white',
-              fontSize: '14px',
-              boxSizing: 'border-box'
-            }}
-          />
-        </div>
+  {/* Barra de Búsqueda General */}
+<div style={{ marginBottom: '16px', position: 'relative' }}>
+  <input
+    type="text"
+    value={busqueda}
+    onChange={(e) => setBusqueda(e.target.value)}
+    placeholder="Buscar productos o comercios en Once..."
+    style={{
+      width: '100%',
+      padding: '12px 40px 12px 16px',
+      border: '1px solid #334155',
+      backgroundColor: '#0B1320',
+      color: 'white',
+      fontSize: '14px',
+      borderRadius: '8px',
+      boxSizing: 'border-box'
+    }}
+  />
+  <span style={{ position: 'absolute', right: '14px', top: '50%', transform: 'translateY(-50%)', fontSize: '16px', pointerEvents: 'none' }}>
+    🔍
+  </span>
+</div>
 
         {/* Barra de Categorías Comerciales de Once */}
         <div style={{ marginBottom: '16px' }}>
