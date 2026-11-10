@@ -238,29 +238,39 @@ export default function App() {
   return (
     <div style={{ backgroundColor: '#090F20', color: '#F3F4F6', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
       
-      {/* Cabecera Principal */}
-      <header style={{ padding: '16px', backgroundColor: '#0B1320', borderBottom: '1px solid #1E293B', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div>
-          <h1 translate="no" style={{ margin: 0, fontSize: '20px', color: '#D49B6A', fontWeight: '800', letterSpacing: '0.5px' }}>
-            MERCADO ONCE
-          </h1>
-          <p style={{ margin: '2px 0 0 0', fontSize: '11px', color: '#94A3B8' }}>Todo lo que buscas en un solo lugar</p>
-        </div>
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <button 
-            onClick={() => { setTipoCuenta('favoritos'); setProductoSeleccionado(null); }} 
-            style={{ backgroundColor: '#1E293B', border: '1px solid #334155', color: '#D49B6A', padding: '6px 10px', borderRadius: '6px', fontSize: '12px', cursor: 'pointer' }}
-          >
-            ❤️ ({favoritos.length})
-          </button>
-          <button 
-            onClick={() => { setTipoCuenta('carrito'); setProductoSeleccionado(null); }} 
-            style={{ backgroundColor: '#D49B6A', border: 'none', color: '#090F20', padding: '6px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer' }}
-          >
-            🛒 ({carrito.length})
-          </button>
-        </div>
-      </header>
+  {/* Cabecera Principal */}
+<header style={{ padding: '16px', backgroundColor: '#090F20', borderBottom: '1px solid #1E293B', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+    <img 
+      src="/icon-192.png" 
+      alt="Mercado Once Logo" 
+      style={{ width: '48px', height: '48px', objectFit: 'contain', borderRadius: '12px' }} 
+    />
+    <div>
+      <h1 translate="no" style={{ margin: 0, fontSize: '20px', color: '#D49B6A', fontWeight: '800', letterSpacing: '0.5px' }}>
+        MERCADO ONCE
+      </h1>
+      <p style={{ margin: '2px 0 0', fontSize: '11px', color: '#94A3B8' }}>
+        Todo lo que buscas en un solo lugar
+      </p>
+    </div>
+  </div>
+
+  <div style={{ display: 'flex', gap: '8px' }}>
+    <button 
+      onClick={() => { setTipoCuenta('favoritos'); setProductoSeleccionado(null); }}
+      style={{ backgroundColor: '#1E293B', border: '1px solid #334155', color: '#D49B6A', padding: '6px 10px', borderRadius: '6px' }}
+    >
+      ❤️ ({favoritos.length})
+    </button>
+    <button 
+      onClick={() => { setTipoCuenta('carrito'); setProductoSeleccionado(null); }}
+      style={{ backgroundColor: '#D49B6A', border: 'none', color: '#090F20', padding: '6px 10px', borderRadius: '6px', fontWeight: 'bold' }}
+    >
+      🛒 ({carrito.length})
+    </button>
+  </div>
+</header>
 
       <main style={{ padding: '16px', paddingBottom: '90px', maxWidth: '650px', margin: '0 auto' }}>
         
