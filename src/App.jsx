@@ -200,7 +200,7 @@ export default function App() {
       e.target.reset();
     } catch (error) {
       console.error('Error de red:', error);
-      alert(Error de conexión: ${error.message});
+      alert(`Error de conexión: ${error.message}`);
     }
   };
 
