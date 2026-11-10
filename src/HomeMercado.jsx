@@ -3,13 +3,12 @@ import React, { useState, useEffect } from 'react';
 export default function HomeMercado({ productos = [], onSelectProducto }) {
   const [busqueda, setBusqueda] = useState('');
   const [indiceCarrusel, setIndiceCarrusel] = useState(0);
-  const [seccionActiva, setSeccionActiva] = useState('home'); // 'home', 'cuenta', etc.
-  const [tipoUsuario, setTipoUsuario] = useState(null); // 'cliente', 'comerciante', null
+  const [seccionActiva, setSeccionActiva] = useState('home');
+  const [tipoUsuario, setTipoUsuario] = useState(null);
 
-  // Promociones para el carrusel automático
   const promos = [
-    { id: 1, titulo: "Promociones Semanales", desc: "Envíos gratis en compras seleccionadas de Once" },
-    { id: 2, titulo: "Novedades Mayoristas", desc: "Precios directo de fabricante e importador" }
+    { id: 1, titulo: 'Promociones Semanales', desc: 'Envíos gratis en compras seleccionadas de Once' },
+    { id: 2, titulo: 'Novedades Mayoristas', desc: 'Precios directo de fabricante e importador' }
   ];
 
   useEffect(() => {
@@ -25,70 +24,6 @@ export default function HomeMercado({ productos = [], onSelectProducto }) {
   );
 
   return (
-    <div style={{ backgroundColor: '#090F20', color: '#FFFFFF', minHeight: '100vh', paddingBottom: '75px', fontFamily: 'sans-serif' }}>
-      
-      {/* 1. ENCABEZADO: Logo Engranaje + Nombre + Eslogan */}
-      <div style={{ padding: '16px' }}>
-        <div style={{
-          border: '1px solid #D49B6A',
-          borderRadius: '16px',
-          padding: '12px 16px',
-          backgroundColor: '#0E1B38',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
-        }}>
-          {/* Logo Engranaje Oficial */}
-          <div style={{
-            width: '48px',
-            height: '48px',
-            borderRadius: '50%',
-            border: '3px solid #D49B6A',
-            backgroundColor: '#090F20',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            position: 'relative',
-            boxSizing: 'border-box'
-          }}>
-            <span style={{ fontSize: '18px' }}>🛒</span>
-            <span style={{ position: 'absolute', fontSize: '10px', top: '10px', color: '#FF3B30' }}>📍</span>
-          </div>
-
-          <div>
-            <h1 style={{ margin: 0, fontSize: '18px', color: '#E2B081', fontWeight: 'bold', letterSpacing: '0.5px' }}>MERCADO ONCE</h1>
-            <p style={{ margin: '2px 0 0 0', fontSize: '11px', color: '#A0AEC0' }}>Todo lo que buscas en un solo lugar</p>
-          </div>
-        </div>
-      </div>
-
-      {/* VISTA PRINCIPAL (HOME) */}
-      {seccionActiva === 'home' && (
-        <>
-          {/* 2. BUSCADOR (Limpio) */}
-          <div style={{ padding: '0 16px 12px 16px' }}>
-            <div style={{ position: 'relative' }}>
-              <input 
-                type="text" 
-                placeholder="Buscar productos..." 
-                value={busqueda}
-                onChange={(e) => setBusqueda(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '12px 40px 12px 14px',
-                  borderRadius: '10px',
-                  border: '1px solid #D49B6A',
-                  backgroundColor: '#0E1B38',
-                  color: '#FFF',
-                  fontSize: '14px',
-                  outline: 'none',
-                  boxSizing: 'border-box'
-                }}
-              />
-              <span style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', color: '#E2B081' }}>🔍</span>
-            </div>
-          </div>
 
           {/* 3. CARRUSEL AUTOMÁTICO */}
           <div style={{ padding: '0 16px 16px 16px' }}>
@@ -149,7 +84,7 @@ export default function HomeMercado({ productos = [], onSelectProducto }) {
         </>
       )}
 
-      {/* VISTA "CUENTA" (Identificación & Gestión) */}
+      {/* VISTA "CUENTA" */}
       {seccionActiva === 'cuenta' && (
         <div style={{ padding: '16px' }}>
           <h2 style={{ color: '#E2B081', fontSize: '18px', marginTop: 0 }}>Identificación / Perfil</h2>
@@ -197,7 +132,6 @@ export default function HomeMercado({ productos = [], onSelectProducto }) {
                 </button>
               </div>
 
-              {/* Panel exclusivo para Comerciantes */}
               {tipoUsuario === 'comerciante' && (
                 <div style={{ borderTop: '1px solid #1E293B', paddingTop: '12px' }}>
                   <h4 style={{ color: '#FFF', margin: '0 0 8px 0' }}>Panel del Comerciante</h4>
@@ -232,7 +166,7 @@ export default function HomeMercado({ productos = [], onSelectProducto }) {
           <span>Home</span>
         </div>
         <div style={{ textAlign: 'center', color: '#A0AEC0', cursor: 'pointer', fontSize: '11px' }}>
-          <div> Categorías</div>
+          <div>📦</div>
           <span>Categ</span>
         </div>
         <div style={{ textAlign: 'center', color: '#A0AEC0', cursor: 'pointer', fontSize: '11px' }}>
