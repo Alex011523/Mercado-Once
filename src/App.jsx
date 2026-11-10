@@ -343,7 +343,7 @@ export default function App() {
                   border: '1px solid #334155',
                   borderRadius: '6px',
                   padding: '6px 10px',
-                  fontSize: '12px',
+                 fontSize: '12px',
                   cursor: 'pointer'
                 }}
               >

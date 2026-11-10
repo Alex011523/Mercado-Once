@@ -32,10 +32,6 @@ export default function HomeMercado({ productos = [], onSelectProducto }) {
               border: '1px solid #D49B6A',
               borderRadius: '12px',
               padding: '16px',
-              backgroundColor: '#0E1B38',
-              textAlign: 'center'
-            }}>
-              <h4 style={{ margin: '0 0 4px 0', color: '#FFF', fontSize: '15px' }}>{promos[indiceCarrusel].titulo}</h4>
               <p style={{ margin: 0, color: '#A0AEC0', fontSize: '12px' }}>{promos[indiceCarrusel].desc}</p>
             </div>
           </div>
