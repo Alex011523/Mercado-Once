@@ -242,7 +242,7 @@ export default function App() {
 <header style={{ padding: '16px', backgroundColor: '#090F20', borderBottom: '1px solid #1E293B', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
   <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
     <img 
-      src="/icon-192.png" 
+      src="/Splash-mo.png.jpeg" 
       alt="Mercado Once Logo" 
       style={{ width: '48px', height: '48px', objectFit: 'contain', borderRadius: '12px' }} 
     />
