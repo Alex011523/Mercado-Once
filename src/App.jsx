@@ -214,7 +214,7 @@ export default function App() {
     }
 
     try {
-      const respuesta = await fetch(${API_BASE_URL}/productos, {
+      const respuesta = await fetch(`${API_BASE_URL}/productos`, {
         method: 'POST',
         body: formData
       });
