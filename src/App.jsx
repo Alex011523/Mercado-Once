@@ -1,4 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { 
+  HomeIcon, 
+  Squares2X2Icon, 
+  ChevronUpIcon, 
+  HeartIcon, 
+  ShoppingCartIcon, 
+  UserIcon 
+} from '@heroicons/react/24/outline';
+import MembresiaPlanes from './MembresiaPlanes';
+import HomeMercado from './HomeMercado';
+const API_BASE_URL = 'https://mercado-once-backend-1.onrender.com/api';
+import React, { useState, useEffect } from 'react';
 import MembresiaPlanes from './MembresiaPlanes';
 import HomeMercado from './HomeMercado';
 const API_BASE_URL = 'https://mercado-once-backend-1.onrender.com/api';
