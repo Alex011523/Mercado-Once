@@ -239,36 +239,28 @@ export default function App() {
     <div style={{ backgroundColor: '#090F20', color: '#F3F4F6', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
       
   {/* Cabecera Principal */}
-<header style={{ padding: '16px', backgroundColor: '#090F20', borderBottom: '1px solid #1E293B', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+<header className="w-full bg-[#0E1838] border-b border-slate-800 py-3 px-4 flex items-center justify-center">
+  <div className="flex items-center gap-3">
     <img 
       src="/Splash-mo.png.jpeg" 
       alt="Mercado Once Logo" 
-      style={{ width: '48px', height: '48px', objectFit: 'contain', borderRadius: '12px' }} 
+      style={{ 
+        width: '48px', 
+        height: '48px', 
+        objectFit: 'cover', 
+        objectPosition: '12% center', 
+        borderRadius: '50%',
+        border: '2px solid #D49B6A'
+      }} 
     />
-    <div>
-      <h1 translate="no" style={{ margin: 0, fontSize: '20px', color: '#D49B6A', fontWeight: '800', letterSpacing: '0.5px' }}>
+    <div className="flex flex-col text-left">
+      <h1 className="text-xl font-extrabold text-[#D49B6A] leading-tight tracking-wide">
         MERCADO ONCE
       </h1>
-      <p style={{ margin: '2px 0 0', fontSize: '11px', color: '#94A3B8' }}>
+      <p className="text-xs text-slate-300 font-medium">
         Todo lo que buscas en un solo lugar
       </p>
     </div>
-  </div>
-
-  <div style={{ display: 'flex', gap: '8px' }}>
-    <button 
-      onClick={() => { setTipoCuenta('favoritos'); setProductoSeleccionado(null); }}
-      style={{ backgroundColor: '#1E293B', border: '1px solid #334155', color: '#D49B6A', padding: '6px 10px', borderRadius: '6px' }}
-    >
-      ❤️ ({favoritos.length})
-    </button>
-    <button 
-      onClick={() => { setTipoCuenta('carrito'); setProductoSeleccionado(null); }}
-      style={{ backgroundColor: '#D49B6A', border: 'none', color: '#090F20', padding: '6px 10px', borderRadius: '6px', fontWeight: 'bold' }}
-    >
-      🛒 ({carrito.length})
-    </button>
   </div>
 </header>
 
@@ -297,32 +289,6 @@ export default function App() {
   </span>
 </div>
 
-        {/* Barra de Categorías Comerciales de Once */}
-        <div style={{ marginBottom: '16px' }}>
-          <p style={{ fontSize: '11px', color: '#94A3B8', marginBottom: '8px', fontWeight: '600' }}>RUBROS Y CATEGORÍAS:</p>
-          <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '6px' }}>
-            {categoriasOnce.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => { setCategoriaSeleccionada(cat); if(tipoCuenta !== 'comprador') setTipoCuenta('comprador'); }}
-                style={{
-                  padding: '6px 14px',
-                  borderRadius: '20px',
-                  border: categoriaSeleccionada === cat && tipoCuenta === 'comprador' ? '1px solid #D49B6A' : '1px solid #1E293B',
-                  backgroundColor: categoriaSeleccionada === cat && tipoCuenta === 'comprador' ? '#1C2A44' : '#0B1320',
-                  color: categoriaSeleccionada === cat && tipoCuenta === 'comprador' ? '#D49B6A' : '#94A3B8',
-                  fontSize: '12px',
-                  whiteSpace: 'nowrap',
-                  cursor: 'pointer',
-                  fontWeight: categoriaSeleccionada === cat && tipoCuenta === 'comprador' ? 'bold' : 'normal'
-                }}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
 
         {/* VISTA 1: Catálogo integrado con HomeMercado */}
         {tipoCuenta === 'comprador' && !productoSeleccionado && (
@@ -740,6 +706,86 @@ export default function App() {
         )}
 
       </main>
+      {/* 3. BARRA INFERIOR DE NAVEGACIÓN */}
+<nav className="fixed bottom-0 left-0 right-0 bg-[#0E1838] border-t border-slate-800 py-2 px-3 flex justify-between items-center z-50">
+  
+  {/* 1. Inicio */}
+  <button 
+    onClick={() => navigate('/')} 
+    className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#D49B6A] transition-colors"
+  >
+    <HomeIcon className="w-5 h-5 text-[#D49B6A]" />
+    <span className="text-[11px] font-medium">Inicio</span>
+  </button>
+
+  {/* 2. Categorías (Menú desplegable con las 10 categorías) */}
+  <div className="relative">
+    <button 
+      onClick={() => setShowCategories(!showCategories)} 
+      className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#D49B6A] transition-colors"
+    >
+      <div className="flex items-center gap-0.5">
+        <Squares2X2Icon className="w-5 h-5 text-[#D49B6A]" />
+        <ChevronUpIcon className={w-3 h-3 text-[#D49B6A] transition-transform ${showCategories ? 'rotate-180' : ''}} />
+      </div>
+      <span className="text-[11px] font-medium">Categorías</span>
+    </button>
+
+    {/* Desplegable con scroll y las 10 categorías */}
+    {showCategories && (
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-64 max-h-64 overflow-y-auto bg-[#0E1838] border border-[#D49B6A] rounded-xl shadow-2xl py-2 z-50">
+        {[
+          "Indumentaria",
+          "Marroquinería",
+          "Tecnología",
+          "Hogar y bazar",
+          "Calzado",
+          "Juguetería",
+          "Bijouterie y accesorios",
+          "Artículos regionales",
+          "Lencería",
+          "Librerías y artículos escolares"
+        ].map((cat, index) => (
+          <button 
+            key={index}
+            onClick={() => { selectCategory(cat); setShowCategories(false); }}
+            className="w-full text-left px-4 py-2.5 text-xs text-slate-200 hover:bg-slate-800 transition-colors border-b border-slate-800/50 last:border-none"
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+    )}
+  </div>
+
+  {/* 3. Fav (Favoritos) */}
+  <button 
+    onClick={() => navigate('/favoritos')} 
+    className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#D49B6A] transition-colors"
+  >
+    <HeartIcon className="w-5 h-5 text-[#D49B6A]" />
+    <span className="text-[11px] font-medium">Fav</span>
+  </button>
+
+  {/* 4. Carrito */}
+  <button 
+    onClick={() => navigate('/carrito')} 
+    className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#D49B6A] transition-colors"
+  >
+    <ShoppingCartIcon className="w-5 h-5 text-[#D49B6A]" />
+    <span className="text-[11px] font-medium">Carrito</span>
+  </button>
+
+  {/* 5. Cuenta */}
+  <button 
+    onClick={() => navigate('/login')} 
+    className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#D49B6A] transition-colors"
+  >
+    <UserIcon className="w-5 h-5 text-[#D49B6A]" />
+    <span className="text-[11px] font-medium">Cuenta</span>
+  </button>
+
+</nav>
     </div>
   );
 }
