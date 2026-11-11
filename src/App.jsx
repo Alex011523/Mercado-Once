@@ -726,7 +726,7 @@ export default function App() {
     >
       <div className="flex items-center gap-0.5">
         <Squares2X2Icon className="w-5 h-5 text-[#D49B6A]" />
-        <ChevronUpIcon className={w-3 h-3 text-[#D49B6A] transition-transform ${showCategories ? 'rotate-180' : ''}} />
+        <ChevronUpIcon className={`w-3 h-3 text-[#D49B6A] transition-transform ${showCategories ? 'rotate-180' : ''}`} />
       </div>
       <span className="text-[11px] font-medium">Categorías</span>
     </button>
