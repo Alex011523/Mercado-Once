@@ -735,7 +735,7 @@ export default function App() {
     >
       <div className="flex items-center gap-0.5">
         <span className="text-lg">📂</span>
-        <span className={text-[10px] text-[#D49B6A] transition-transform ${showCategories ? "rotate-180" : ""}}>▲</span>
+        <span className={`text-[10px] text-[#D49B6A] transition-transform ${showCategories ? "rotate-180" : ""}`}>▲</span>
       </div>
       <span className="text-[11px] font-medium">Categorías</span>
     </button>
