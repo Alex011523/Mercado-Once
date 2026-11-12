@@ -6,7 +6,6 @@ import {
   HeartIcon, 
   ShoppingCartIcon, 
   UserIcon 
-} from '@heroicons/react/24/outline';
 import MembresiaPlanes from './MembresiaPlanes';
 import HomeMercado from './HomeMercado';
 
