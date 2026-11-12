@@ -715,7 +715,7 @@ export default function App() {
         )}
 
       </main>
-      {/* 3. BARRA INFERIOR DE NAVEGACIÓN */}
+{/* 3. BARRA INFERIOR DE NAVEGACIÓN */}
 <nav className="fixed bottom-0 left-0 right-0 bg-[#0E1838] border-t border-slate-800 py-2 px-3 flex justify-between items-center z-50">
   
   {/* 1. Inicio */}
@@ -723,7 +723,7 @@ export default function App() {
     onClick={() => navigate('/')} 
     className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#D49B6A] transition-colors"
   >
-    <HomeIcon className="w-5 h-5 text-[#D49B6A]" />
+    <span className="text-lg">🏠</span>
     <span className="text-[11px] font-medium">Inicio</span>
   </button>
 
@@ -734,8 +734,8 @@ export default function App() {
       className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#D49B6A] transition-colors"
     >
       <div className="flex items-center gap-0.5">
-        <Squares2X2Icon className="w-5 h-5 text-[#D49B6A]" />
-        <ChevronUpIcon className={`w-3 h-3 text-[#D49B6A] transition-transform ${showCategories ? 'rotate-180' : ''}`} />
+        <span className="text-lg">📂</span>
+        <span className={text-[10px] text-[#D49B6A] transition-transform ${showCategories ? "rotate-180" : ""}}>▲</span>
       </div>
       <span className="text-[11px] font-medium">Categorías</span>
     </button>
@@ -772,7 +772,7 @@ export default function App() {
     onClick={() => navigate('/favoritos')} 
     className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#D49B6A] transition-colors"
   >
-    <HeartIcon className="w-5 h-5 text-[#D49B6A]" />
+    <span className="text-lg">❤️</span>
     <span className="text-[11px] font-medium">Fav</span>
   </button>
 
@@ -781,7 +781,7 @@ export default function App() {
     onClick={() => navigate('/carrito')} 
     className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#D49B6A] transition-colors"
   >
-    <ShoppingCartIcon className="w-5 h-5 text-[#D49B6A]" />
+    <span className="text-lg">🛒</span>
     <span className="text-[11px] font-medium">Carrito</span>
   </button>
 
@@ -790,7 +790,7 @@ export default function App() {
     onClick={() => navigate('/login')} 
     className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#D49B6A] transition-colors"
   >
-    <UserIcon className="w-5 h-5 text-[#D49B6A]" />
+    <span className="text-lg">👤</span>
     <span className="text-[11px] font-medium">Cuenta</span>
   </button>
 
