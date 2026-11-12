@@ -7,6 +7,7 @@ const API_BASE_URL = 'https://mercado-once-backend-1.onrender.com/api';
 export default function App() {
   const [tipoCuenta, setTipoCuenta] = useState('comprador');
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('Todos');
+  const [showCategories, setShowCategories] = useState(false);
   const [busqueda, setBusqueda] = useState('');
   const [ordenPrecio, setOrdenPrecio] = useState('menor');
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
