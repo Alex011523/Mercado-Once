@@ -1,11 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  HomeIcon, 
-  Squares2X2Icon, 
-  ChevronUpIcon, 
-  HeartIcon, 
-  ShoppingCartIcon, 
-  UserIcon 
 import MembresiaPlanes from './MembresiaPlanes';
 import HomeMercado from './HomeMercado';
 
