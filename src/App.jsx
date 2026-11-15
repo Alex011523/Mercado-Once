@@ -241,8 +241,14 @@ export default function App() {
     <div style={{ backgroundColor: '#090F20', color: '#F3F4F6', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
       
   {/* Cabecera Principal */}
-<header className="flex items-center gap-3 py-3 px-4 bg-[#0E1838] border border-[#D49B6A] rounded-2xl shadow-lg my-3 mx-4">
-  <div className="flex items-center gap-3">
+<header 
+  className="flex items-center gap-3 py-3 px-4 bg-[#0E1838] rounded-2xl shadow-lg my-3 mx-4"
+  style={{
+    border: '2px solid transparent',
+    borderImage: 'linear-gradient(to right, #FDE08D, #D4AF37, #AA7C11) 1'
+  }}
+>
+  <div className="flex items-center gap-3 w-full">
     <img 
       src="/Splash-mo.png.jpeg" 
       alt="Mercado Once Logo" 
@@ -252,14 +258,14 @@ export default function App() {
         objectFit: 'cover', 
         objectPosition: '12% center', 
         borderRadius: '50%',
-        border: '2px solid #D49B6A'
+        border: '2px solid #D4AF37'
       }} 
     />
     <div className="flex flex-col text-left">
-      <h1 className="text-xl font-extrabold text-[#D49B6A] leading-tight tracking-wide">
+      <h1 className="text-xl font-extrabold text-[#FDE08D] leading-tight tracking-wide">
         MERCADO ONCE
       </h1>
-      <p className="text-xs text-slate-300 font-medium">
+      <p className="text-xs text-[#D4AF37] font-medium italic">
         Todo lo que buscas en un solo lugar
       </p>
     </div>
