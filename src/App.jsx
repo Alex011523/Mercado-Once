@@ -240,39 +240,39 @@ export default function App() {
   return (
     <div style={{ backgroundColor: '#090F20', color: '#F3F4F6', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
       
-  {/* Cabecera Principal */}
-<header 
-  className="flex items-center gap-3 py-3 px-4 bg-[#0E1838] rounded-2xl shadow-lg my-3 mx-4"
-  style={{
-    border: '2px solid transparent',
-    borderImage: 'linear-gradient(to right, #FDE08D, #D4AF37, #AA7C11) 1'
-  }}
->
-  <div className="flex items-center gap-3 w-full">
-    <img 
-      src="/Splash-mo.png.jpeg" 
-      alt="Mercado Once Logo" 
-      style={{ 
-        width: '48px', 
-        height: '48px', 
-        minWidth: '48px',
-        objectFit: 'cover', 
-        objectPosition: '12% center', 
-        borderRadius: '50%',
-        border: '2px solid #D4AF37'
-      }} 
-      onError={(e) => { e.target.src = '/favicon.svg'; }}
-    />
-    <div className="flex flex-col text-left flex-1">
-      <h1 className="text-xl font-extrabold text-[#FDE08D] leading-tight tracking-wide">
-        MERCADO ONCE
-      </h1>
-      <p className="text-xs text-[#D4AF37] font-medium italic">
-        Todo lo que buscas en un solo lugar
-      </p>
+{/* Cabecera Principal */}
+  <header 
+    className="flex items-center gap-3 py-3 px-4 bg-[#0E1838] rounded-2xl shadow-lg my-3 mx-4"
+    style={{
+      border: '2px solid transparent',
+      borderImage: 'linear-gradient(to right, #FDE08D, #D4AF37, #AA7C11) 1'
+    }}
+  >
+    <div className="flex items-center gap-3 w-full">
+      <img 
+        src="/Splash-mo.png.jpeg" 
+        alt="Mercado Once Logo" 
+        style={{ 
+          width: '48px', 
+          height: '48px', 
+          minWidth: '48px',
+          objectFit: 'cover', 
+          objectPosition: '12% center', 
+          borderRadius: '50%',
+          border: '2px solid #D4AF37'
+        }} 
+        onError={(e) => { e.target.src = '/favicon.svg'; }}
+      />
+      <div className="flex flex-col text-left flex-1">
+        <h1 className="text-xl font-extrabold text-[#FDE08D] leading-tight tracking-wide">
+          MERCADO ONCE
+        </h1>
+        <p className="text-xs text-[#D4AF37] font-medium italic">
+          Todo lo que buscas en un solo lugar
+        </p>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
       <main style={{ padding: '16px', paddingBottom: '90px', maxWidth: '650px', margin: '0 auto' }}>
         
@@ -796,6 +796,6 @@ export default function App() {
   </button>
 
 </nav>
-    </div>
+</div>
   );
 }
