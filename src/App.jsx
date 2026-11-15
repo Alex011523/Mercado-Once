@@ -241,7 +241,7 @@ export default function App() {
     <div style={{ backgroundColor: '#090F20', color: '#F3F4F6', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
       
   {/* Cabecera Principal */}
-<header className="w-full bg-[#0E1838] border-b border-slate-800 py-3 px-4 flex items-center justify-center">
+<header className="flex items-center gap-3 py-3 px-4 bg-[#0E1838] border border-[#D49B6A] rounded-2xl shadow-lg my-3 mx-4">
   <div className="flex items-center gap-3">
     <img 
       src="/Splash-mo.png.jpeg" 
