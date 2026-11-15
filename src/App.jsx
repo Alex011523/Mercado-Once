@@ -241,63 +241,89 @@ export default function App() {
     <div style={{ backgroundColor: '#090F20', color: '#F3F4F6', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
       
 {/* Cabecera Principal */}
-
-  <header 
-    className="flex items-center gap-3 py-3 px-4 bg-[#0E1838] rounded-2xl shadow-lg my-3 mx-4"
-    style={{
-      border: '2px solid transparent',
-      borderImage: 'linear-gradient(to right, #FDE08D, #D4AF37, #AA7C11) 1'
-    }}
-  >
-    <div className="flex items-center gap-3 w-full">
-      <img 
-        src="/Splash-mo.png.jpeg" 
-        alt="Mercado Once Logo" 
-        style={{ 
-          width: '48px', 
-          height: '48px', 
-          minWidth: '48px',
-          objectFit: 'cover', 
-          objectPosition: '12% center', 
-          borderRadius: '50%',
-          border: '2px solid #D4AF37'
-        }} 
-        onError={(e) => { e.target.src = '/favicon.svg'; }}
-      />
-      <div className="flex flex-col text-left flex-1">
-        <h1 className="text-xl font-extrabold text-[#FDE08D] leading-tight tracking-wide">
-          MERCADO ONCE
-        </h1>
-        <p className="text-xs text-[#D4AF37] font-medium italic">
-          Todo lo que buscas en un solo lugar
-        </p>
-      </div>
-    </div>
-  </header>
+<header 
+  style={{
+    backgroundColor: '#0F121C',
+    border: '2px solid #D4AF37',
+    borderRadius: '16px',
+    padding: '12px 16px',
+    marginBottom: '16px',
+    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.5)'
+  }}
+>
+  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginBottom: '8px' }}>
+    <img
+      src="/Splash-mo.png.jpeg"
+      alt="Mercado Once Logo"
+      style={{
+        width: '55px',
+        height: '55px',
+        minWidth: '55px',
+        objectFit: 'cover',
+        objectPosition: '12% center',
+        borderRadius: '50%',
+        border: '2px solid #D4AF37'
+      }}
+      onError={(e) => { e.target.src = '/favicon.svg'; }}
+    />
+    <h1 style={{ color: '#FDE08D', fontSize: '26px', fontWeight: '800', letterSpacing: '0.05em', margin: 0 }}>
+      MERCADO ONCE
+    </h1>
+  </div>
+  
+  <div style={{ textAlign: 'center', width: '100%' }}>
+    <p style={{ color: '#D4AF37', fontSize: '16px', fontStyle: 'italic', fontWeight: '500', margin: 0 }}>
+      Todo lo que buscas en un solo lugar
+    </p>
+  </div>
+</header>
 
       <main style={{ padding: '16px', paddingBottom: '90px', maxWidth: '650px', margin: '0 auto' }}>
         
-  {/* Barra de Búsqueda General */}
+{/* Barra de Búsqueda General */}
 <div style={{ marginBottom: '16px', position: 'relative' }}>
-  <input
-    type="text"
-    value={busqueda}
-    onChange={(e) => setBusqueda(e.target.value)}
-    placeholder="Buscar productos o comercios en Once..."
-    style={{
-      width: '100%',
-      padding: '12px 40px 12px 16px',
-      border: '1px solid #334155',
-      backgroundColor: '#0B1320',
-      color: 'white',
-      fontSize: '14px',
-      borderRadius: '8px',
-      boxSizing: 'border-box'
-    }}
-  />
-  <span style={{ position: 'absolute', right: '14px', top: '50%', transform: 'translateY(-50%)', fontSize: '16px', pointerEvents: 'none' }}>
-    🔍
-  </span>
+  <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+    backgroundColor: '#4A4A4A',
+    border: '2px solid #D4AF37',
+    borderRadius: '10px',
+    overflow: 'hidden',
+    boxSizing: 'border-box'
+  }}>
+    <input
+      type="text"
+      value={busqueda}
+      onChange={(e) => setBusqueda(e.target.value)}
+      placeholder="Buscar productos o comercios en Once..."
+      style={{
+        width: '100%',
+        padding: '12px 16px',
+        backgroundColor: 'transparent',
+        border: 'none',
+        color: 'white',
+        fontSize: '14px',
+        outline: 'none'
+      }}
+    />
+    <button
+      type="button"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'linear-gradient(to bottom, #E5C158, #B8860B)',
+        padding: '12px 16px',
+        border: 'none',
+        cursor: 'pointer'
+      }}
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" style={{ width: '18px', height: '18px' }} fill="none" viewBox="0 0 24 24" stroke="black" strokeWidth={2.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
+      </svg>
+    </button>
+  </div>
 </div>
 
 
@@ -718,33 +744,33 @@ export default function App() {
 
       </main>
 {/* 3. BARRA INFERIOR DE NAVEGACIÓN */}
-<nav className="fixed bottom-0 left-0 right-0 bg-[#0E1838] border-t border-slate-800 py-2 px-3 flex justify-between items-center z-50">
+<nav className="fixed bottom-0 left-0 right-0 bg-[#0F121C] border-t-2 border-[#D4AF37] py-2 px-3 flex justify-between items-center z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.5)]">
   
   {/* 1. Inicio */}
   <button 
     onClick={() => navigate('/')} 
-    className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#D49B6A] transition-colors"
+    className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#FDE08D] transition-colors"
   >
     <span className="text-lg">🏠</span>
     <span className="text-[11px] font-medium">Inicio</span>
   </button>
 
-  {/* 2. Categorías (Menú desplegable con las 10 categorías) */}
+  {/* 2. Categoría */}
   <div className="relative">
     <button 
       onClick={() => setShowCategories(!showCategories)} 
-      className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#D49B6A] transition-colors"
+      className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#FDE08D] transition-colors"
     >
       <div className="flex items-center gap-0.5">
         <span className="text-lg">📂</span>
-        <span className={`text-[10px] text-[#D49B6A] transition-transform ${showCategories ? "rotate-180" : ""}`}>▲</span>
+        <span className={`text-[10px] text-[#D4AF37] transition-transform ${showCategories ? "rotate-180" : ""}`}>▲</span>
       </div>
-      <span className="text-[11px] font-medium">Categorías</span>
+      <span className="text-[11px] font-medium">Categoría</span>
     </button>
 
     {/* Desplegable con scroll y las 10 categorías */}
     {showCategories && (
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-64 max-h-64 overflow-y-auto bg-[#0E1838] border border-[#D49B6A] rounded-xl shadow-2xl py-2 z-50">
+      <div className="absolute bottom-14 left-1/2 -translate-x-1/2 w-64 max-h-64 overflow-y-auto bg-[#0F121C] border-2 border-[#D4AF37] rounded-xl shadow-2xl py-2 z-50">
         {[
           "Indumentaria",
           "Marroquinería",
@@ -760,7 +786,7 @@ export default function App() {
           <button 
             key={index}
             onClick={() => { selectCategory(cat); setShowCategories(false); }}
-            className="w-full text-left px-4 py-2.5 text-xs text-slate-200 hover:bg-slate-800 transition-colors border-b border-slate-800/50 last:border-none"
+            className="w-full text-left px-4 py-2.5 text-xs text-slate-200 hover:bg-[#1a1f30] hover:text-[#FDE08D] transition-colors border-b border-slate-800/50 last:border-none"
           >
             {cat}
           </button>
@@ -769,34 +795,34 @@ export default function App() {
     )}
   </div>
 
-  {/* 3. Fav (Favoritos) */}
+  {/* 3. Fav */}
   <button 
     onClick={() => navigate('/favoritos')} 
-    className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#D49B6A] transition-colors"
+    className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#FDE08D] transition-colors"
   >
     <span className="text-lg">❤️</span>
-    <span className="text-[11px] font-medium">Fav</span>
+    <span className="text-[11px] font-medium">Fav.</span>
   </button>
 
   {/* 4. Carrito */}
   <button 
     onClick={() => navigate('/carrito')} 
-    className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#D49B6A] transition-colors"
+    className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#FDE08D] transition-colors"
   >
     <span className="text-lg">🛒</span>
     <span className="text-[11px] font-medium">Carrito</span>
   </button>
 
-  {/* 5. Cuenta */}
+  {/* 5. Acceso */}
   <button 
     onClick={() => navigate('/login')} 
-    className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#D49B6A] transition-colors"
+    className="flex flex-col items-center gap-1 text-slate-300 hover:text-[#FDE08D] transition-colors"
   >
     <span className="text-lg">👤</span>
-    <span className="text-[11px] font-medium">Cuenta</span>
+    <span className="text-[11px] font-medium">Acceso</span>
   </button>
 
 </nav>
 </div>
-  );
+);
 }
