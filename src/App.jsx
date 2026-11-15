@@ -241,6 +241,7 @@ export default function App() {
     <div style={{ backgroundColor: '#090F20', color: '#F3F4F6', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
       
 {/* Cabecera Principal */}
+
   <header 
     className="flex items-center gap-3 py-3 px-4 bg-[#0E1838] rounded-2xl shadow-lg my-3 mx-4"
     style={{
