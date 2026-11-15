@@ -744,7 +744,7 @@ export default function App() {
 
       </main>
 {/* 3. BARRA INFERIOR DE NAVEGACIÓN */}
-<nav className="fixed bottom-0 left-0 right-0 bg-[#0F121C] border-t-2 border-[#D4AF37] py-2 px-3 flex justify-between items-center z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.5)]">
+<nav className="fixed bottom-0 left-0 right-0 w-full bg-[#0F121C] border-t-2 border-[#D4AF37] py-2 px-3 flex justify-between items-center z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.5)]">
   
   {/* 1. Inicio */}
   <button 
