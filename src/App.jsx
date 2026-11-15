@@ -255,13 +255,15 @@ export default function App() {
       style={{ 
         width: '48px', 
         height: '48px', 
+        minWidth: '48px',
         objectFit: 'cover', 
         objectPosition: '12% center', 
         borderRadius: '50%',
         border: '2px solid #D4AF37'
       }} 
+      onError={(e) => { e.target.src = '/favicon.svg'; }}
     />
-    <div className="flex flex-col text-left">
+    <div className="flex flex-col text-left flex-1">
       <h1 className="text-xl font-extrabold text-[#FDE08D] leading-tight tracking-wide">
         MERCADO ONCE
       </h1>
