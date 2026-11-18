@@ -163,7 +163,7 @@ export default function App() {
         } else {
           alert('¡Registro de comerciante guardado con éxito!');
         }
-        localStorage.setItem('comerciosMercadoOnce', JSON.stringify(datos));
+        localStorage.setItem('comercioMercadoOnce', JSON.stringify(datos));
         setComercioActivo(datos);
         e.target.reset();
         setTipoCuenta('cargar_producto');
