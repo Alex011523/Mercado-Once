@@ -138,18 +138,49 @@ export default function App() {
     }
   };
 
-  const handleSubmitComerciante = async (e) => {
+const handleSubmitComerciante = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const datos = {
-      nombre: formData.get('nombre'),
-      direccion: formData.get('direccion'),
-      whatsapp: formData.get('whatsapp'),
-      cuit: formData.get('cuit'),
-      categorias: formData.getAll('categorias')
-    };
+    const categoriasLimpias = formData.getAll('categorias').map((cat) => cat.toString().trim()).filter(Boolean);
 
     try {
+      let userId = usuarioActual?.id || comercioActivo?.userId || null;
+
+      if (!userId) {
+        const nombreTemp = (formData.get('nombre') || '').toString().trim();
+        const cuitTemp = (formData.get('cuit') || '').toString().trim();
+        const emailGenerado = cuitTemp
+          ? comercio.${cuitTemp.replace(/\D/g, '')}@mercadoonce.local
+          : comercio.${Date.now()}@mercadoonce.local;
+
+        const respUsuario = await fetch(`${API_BASE_URL}/users`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: emailGenerado,
+            name: nombreTemp,
+            role: 'COMERCIANTE'
+          })
+        });
+
+        const dataUsuario = await respUsuario.json();
+        if (!respUsuario.ok) {
+          alert(`Error al crear usuario comerciante: ${dataUsuario.error || dataUsuario.message || JSON.stringify(dataUsuario)}`);
+          return;
+        }
+
+        userId = dataUsuario.user?.id || dataUsuario.data?.id;
+      }
+
+      const datos = {
+        userId: Number(userId),
+        nombre: (formData.get('nombre') || '').toString().trim(),
+        direccion: (formData.get('direccion') || '').toString().trim(),
+        whatsapp: (formData.get('whatsapp') || '').toString().trim(),
+        cuit: (formData.get('cuit') || '').toString().trim(),
+        categorias: categoriasLimpias
+      };
+
       const respuesta = await fetch(`${API_BASE_URL}/comerciantes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -157,18 +188,23 @@ export default function App() {
       });
       const resultado = await respuesta.json();
       if (respuesta.ok) {
-        const numeroSocio = resultado.id || resultado.comercio?.id || 1;
+        const comercioGuardado = resultado.data || resultado.comercio || resultado;
+        const comercioParaSesion = {
+          ...datos,
+          ...comercioGuardado
+        };
+        const numeroSocio = comercioGuardado.merchant_number ?? resultado.id ?? resultado.comercio?.id ?? 1;
         if (numeroSocio <= 50) {
           alert(`¡Felicidades! Sos el miembro número #${numeroSocio} y tenés tus 60 días de membresía gratis.`);
         } else {
           alert('¡Registro de comerciante guardado con éxito!');
         }
-        localStorage.setItem('comercioMercadoOnce', JSON.stringify(datos));
-        setComercioActivo(datos);
+        localStorage.setItem('comercioMercadoOnce', JSON.stringify(comercioParaSesion));
+        setComercioActivo(comercioParaSesion);
         e.target.reset();
         setTipoCuenta('cargar_producto');
       } else {
-        alert(`Error del servidor: ${resultado.message || JSON.stringify(resultado)}`);
+        alert(`Error del servidor: ${resultado.message || resultado.error || JSON.stringify(resultado)}`);
       }
     } catch (error) {
       console.error('Error de red:', error);
