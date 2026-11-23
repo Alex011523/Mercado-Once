@@ -223,7 +223,7 @@ const handleSubmitComerciante = async (e) => {
   };
 
   try {
-    const respuesta = await fetch(${API_BASE_URL}/users, {
+    const respuesta = await fetch(`${API_BASE_URL}/users`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -239,16 +239,16 @@ const handleSubmitComerciante = async (e) => {
 
     if (!respuesta.ok) {
       const mensajeError = resultado?.error || rawText || 'No se pudo completar el registro.';
-      alert(Error del servidor (${respuesta.status}): ${mensajeError});
+      alert(`Error del servidor (${respuesta.status}): ${mensajeError}`);
       return;
     }
 
     const usuarioCreado = resultado?.user || resultado?.data || {};
-    alert(¡Registro de cliente guardado con éxito! (${usuarioCreado.email || payload.email}));
+    alert(`¡Registro de cliente guardado con éxito! (${usuarioCreado.email || payload.email})`);
     e.target.reset();
   } catch (error) {
     console.error('Error de red:', error);
-    alert(Error de conexión: ${error.message});
+    alert(`Error de conexión: ${error.message}`);
   }
 };
 
