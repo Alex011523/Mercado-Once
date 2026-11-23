@@ -212,35 +212,45 @@ const handleSubmitComerciante = async (e) => {
     }
   };
 
-  const handleSubmitCliente = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const datos = { 
-      nombre: formData.get('nombre'),
-      email: formData.get('email'),
-      password: formData.get('password')
-    };
+ const handleSubmitCliente = async (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
 
-    try {
-      const respuesta = await fetch(`${API_BASE_URL}/clientes`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datos)
-      });
-
-      if (!respuesta.ok) {
-        const errorTexto = await respuesta.text();
-        alert(`Error del servidor (${respuesta.status}): ${errorTexto}`);
-        return;
-      }
-
-      alert('¡Registro de cliente guardado con éxito!');
-      e.target.reset();
-    } catch (error) {
-      console.error('Error de red:', error);
-      alert(`Error de conexión: ${error.message}`);
-    }
+  const payload = {
+    email: formData.get('email'),
+    name: formData.get('nombre'),
+    role: 'CLIENTE',
   };
+
+  try {
+    const respuesta = await fetch(${API_BASE_URL}/users, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    const rawText = await respuesta.text();
+    let resultado = null;
+    try {
+      resultado = rawText ? JSON.parse(rawText) : null;
+    } catch {
+      resultado = null;
+    }
+
+    if (!respuesta.ok) {
+      const mensajeError = resultado?.error || rawText || 'No se pudo completar el registro.';
+      alert(Error del servidor (${respuesta.status}): ${mensajeError});
+      return;
+    }
+
+    const usuarioCreado = resultado?.user || resultado?.data || {};
+    alert(¡Registro de cliente guardado con éxito! (${usuarioCreado.email || payload.email}));
+    e.target.reset();
+  } catch (error) {
+    console.error('Error de red:', error);
+    alert(Error de conexión: ${error.message});
+  }
+};
 
   const handleSubmitProducto = async (e) => {
     e.preventDefault();
