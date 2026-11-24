@@ -13,6 +13,7 @@ export default function App() {
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [carrito, setCarrito] = useState([]);
   const [imagenProducto, setImagenProducto] = useState('');
+  const [guardandoProducto, setGuardandoProducto] = useState(false);
   const [favoritos, setFavoritos] = useState([]);
   const [mostrarQR, setMostrarQR] = useState(false);
   const [comercioActivo, setComercioActivo] = useState(() => {
@@ -252,34 +253,39 @@ const handleSubmitComerciante = async (e) => {
   }
 };
 
-  const handleSubmitProducto = async (e) => {
+const handleSubmitProducto = async (e) => {
     e.preventDefault();
+    if (guardandoProducto) return;
+
     const formElement = e.target;
     const formData = new FormData(formElement);
-    
+
     if (imagenProducto && !formData.get('imagen')) {
       formData.append('imagen', imagenProducto);
     }
 
+    setGuardandoProducto(true);
+
     try {
       const respuesta = await fetch(`${API_BASE_URL}/productos`, {
         method: 'POST',
-        body: formData
+        body: formData,
       });
-      
+
       const resultado = await respuesta.json();
-      
+
       if (respuesta.ok) {
         alert('¡Producto guardado con éxito!');
         formElement.reset();
         setImagenProducto('');
-        setTipoCuenta('comprador');
       } else {
         alert(`Error del servidor: ${resultado.error || 'No se pudo guardar'}`);
       }
     } catch (error) {
       console.error('Error de red:', error);
       alert('Error de conexión con el servidor.');
+    } finally {
+      setGuardandoProducto(false);
     }
   };
 
@@ -574,7 +580,7 @@ const handleSubmitComerciante = async (e) => {
                   </div>
                 )}
               </div>
-              <button type="submit" style={{ backgroundColor: '#D49B6A', color: '#090F20', border: 'none', padding: '12px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer' }}>Guardar y Publicar Producto</button>
+             <button type="submit" disabled={guardandoProducto} style={{ backgroundColor: '#D49B6A', color: '#090F20', border: 'none', padding: '12px', borderRadius: '8px', fontWeight: 'bold', cursor: guardandoProducto ? 'not-allowed' : 'pointer', opacity: guardandoProducto ? 0.7 : 1 }}>{guardandoProducto ? 'Guardando y Publicando...' : 'Guardar y Publicar Producto'}</button>
             </form>
           </div>
         )}
