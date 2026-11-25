@@ -152,7 +152,7 @@ const handleSubmitComerciante = async (e) => {
         const cuitTemp = (formData.get('cuit') || '').toString().trim();
         const emailGenerado = cuitTemp
           ? `comercio.${cuitTemp.replace(/\D/g, '')}@mercadoonce.local` : '',
-          : comercio.${Date.now()}@mercadoonce.local;
+          : `comercio.${Date.now()}@mercadoonce.local`;
 
         const respUsuario = await fetch(`${API_BASE_URL}/users`, {
           method: 'POST',
